@@ -115,6 +115,12 @@
 		188BF0F916AD3CB3006A2602 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BF0F116AD3CB3006A2602 /* SinaWeibo.m */; };
 		188BF0FA16AD3CB3006A2602 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BF0F316AD3CB3006A2602 /* SinaWeiboAuthorizeView.m */; };
 		188BF0FB16AD3CB3006A2602 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BF0F616AD3CB3006A2602 /* SinaWeiboRequest.m */; };
+		228EC4D11C9841B200064A7B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228EC4D01C9841B200064A7B /* AudioToolbox.framework */; };
+		228EC4D51C98489F00064A7B /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 228EC4D41C98489F00064A7B /* test.wav */; };
+		22C0F1181CA19C7D0056FBD9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F1161CA19C7D0056FBD9 /* DetailViewController.m */; };
+		22C0F1191CA19C7D0056FBD9 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F1171CA19C7D0056FBD9 /* DetailViewController.xib */; };
+		22CE89FB1CA1905F0063C12B /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 22CE89F81CA1905F0063C12B /* 37x-Checkmark.png */; };
+		22CE89FC1CA1905F0063C12B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE89FA1CA1905F0063C12B /* MBProgressHUD.m */; };
 		C52DDBFD1C731F8B00D77E6E /* WeiboCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52DDBFA1C731F8B00D77E6E /* WeiboCell.m */; };
 		C52DDBFE1C731F8B00D77E6E /* WeiboView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52DDBFC1C731F8B00D77E6E /* WeiboView.m */; };
 		C52DDC091C73204C00D77E6E /* theme.plist in Resources */ = {isa = PBXBuildFile; fileRef = C52DDC001C73204C00D77E6E /* theme.plist */; };
@@ -286,6 +292,14 @@
 		188BF0F516AD3CB3006A2602 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
 		188BF0F616AD3CB3006A2602 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
 		188BF0FC16AD3D4A006A2602 /* CONSTS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CONSTS.h; sourceTree = "<group>"; };
+		228EC4D01C9841B200064A7B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		228EC4D41C98489F00064A7B /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
+		22C0F1151CA19C7D0056FBD9 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		22C0F1161CA19C7D0056FBD9 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		22C0F1171CA19C7D0056FBD9 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		22CE89F81CA1905F0063C12B /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
+		22CE89F91CA1905F0063C12B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		22CE89FA1CA1905F0063C12B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C52DDBF91C731F8B00D77E6E /* WeiboCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboCell.h; sourceTree = "<group>"; };
 		C52DDBFA1C731F8B00D77E6E /* WeiboCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboCell.m; sourceTree = "<group>"; };
 		C52DDBFB1C731F8B00D77E6E /* WeiboView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboView.h; sourceTree = "<group>"; };
@@ -335,6 +349,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228EC4D11C9841B200064A7B /* AudioToolbox.framework in Frameworks */,
 				C5B291791C76E8AD007B5582 /* libicucore.dylib in Frameworks */,
 				188BF02016AD1D5E006A2602 /* CoreText.framework in Frameworks */,
 				188BF01E16AD1CDC006A2602 /* QuartzCore.framework in Frameworks */,
@@ -367,6 +382,7 @@
 		188BEFC016AD1968006A2602 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				228EC4D01C9841B200064A7B /* AudioToolbox.framework */,
 				C5B291781C76E8AD007B5582 /* libicucore.dylib */,
 				188BF01F16AD1D5E006A2602 /* CoreText.framework */,
 				188BF01D16AD1CDC006A2602 /* QuartzCore.framework */,
@@ -401,6 +417,7 @@
 				188BEFD116AD1968006A2602 /* AppDelegate.m */,
 				188BEFCF16AD1968006A2602 /* WXWeibo-Prefix.pch */,
 				188BEFCD16AD1968006A2602 /* main.m */,
+				228EC4D41C98489F00064A7B /* test.wav */,
 				188BEFC916AD1968006A2602 /* WXWeibo-Info.plist */,
 				188BEFCA16AD1968006A2602 /* InfoPlist.strings */,
 				C5B894B21C8B0D4A00E8E927 /* Default-568h@2x.png */,
@@ -440,6 +457,7 @@
 		188BF00016AD1B7F006A2602 /* openSource */ = {
 			isa = PBXGroup;
 			children = (
+				22CE89F71CA1905F0063C12B /* MBProgressHUD */,
 				188BF01616AD1C0F006A2602 /* DDMenu */,
 				188BF01216AD1BE6006A2602 /* FontLabel */,
 				188BF00116AD1B7F006A2602 /* SDWebImage */,
@@ -509,6 +527,9 @@
 				188BF03016AD215A006A2602 /* HomeViewController.h */,
 				188BF03116AD215A006A2602 /* HomeViewController.m */,
 				188BF03216AD215A006A2602 /* HomeViewController.xib */,
+				22C0F1151CA19C7D0056FBD9 /* DetailViewController.h */,
+				22C0F1161CA19C7D0056FBD9 /* DetailViewController.m */,
+				22C0F1171CA19C7D0056FBD9 /* DetailViewController.xib */,
 				188BF0DC16AD3375006A2602 /* LeftViewController.h */,
 				188BF0DD16AD3375006A2602 /* LeftViewController.m */,
 				188BF0DE16AD3375006A2602 /* LeftViewController.xib */,
@@ -656,6 +677,16 @@
 				188BF0F616AD3CB3006A2602 /* SinaWeiboRequest.m */,
 			);
 			path = SinaWeibo;
+			sourceTree = "<group>";
+		};
+		22CE89F71CA1905F0063C12B /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				22CE89F81CA1905F0063C12B /* 37x-Checkmark.png */,
+				22CE89F91CA1905F0063C12B /* MBProgressHUD.h */,
+				22CE89FA1CA1905F0063C12B /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		C52DDBF81C731F7200D77E6E /* WeiboView */ = {
@@ -824,6 +855,7 @@
 				188BF08F16AD2673006A2602 /* discover_default@2x.png in Resources */,
 				188BF09216AD2673006A2602 /* icon_detail.png in Resources */,
 				188BF09316AD2673006A2602 /* icon_detail@2x.png in Resources */,
+				22CE89FB1CA1905F0063C12B /* 37x-Checkmark.png in Resources */,
 				188BF09416AD2673006A2602 /* main_badge.png in Resources */,
 				188BF09516AD2673006A2602 /* main_badge@2x.png in Resources */,
 				188BF09616AD2673006A2602 /* msgcome.wav in Resources */,
@@ -836,6 +868,7 @@
 				188BF09C16AD2673006A2602 /* prlm_pull_refresh_arrow@2x.png in Resources */,
 				188BF09D16AD2673006A2602 /* statusdetail_cell_sepatator.png in Resources */,
 				188BF09E16AD2673006A2602 /* statusdetail_cell_sepatator@2x.png in Resources */,
+				228EC4D51C98489F00064A7B /* test.wav in Resources */,
 				C5B894981C8B08E100E8E927 /* blackArrow.png in Resources */,
 				188BF09F16AD2673006A2602 /* statusdetail_header_separator.png in Resources */,
 				188BF0A016AD2673006A2602 /* statusdetail_header_separator@2x.png in Resources */,
@@ -892,6 +925,7 @@
 				188BF0D516AD2AC3006A2602 /* tabbar_discover_selected@2x.png in Resources */,
 				188BF0D616AD2AC3006A2602 /* tabbar_discover.png in Resources */,
 				188BF0D716AD2AC3006A2602 /* tabbar_discover@2x.png in Resources */,
+				22C0F1191CA19C7D0056FBD9 /* DetailViewController.xib in Resources */,
 				188BF0DA16AD2D60006A2602 /* tabbar_background.png in Resources */,
 				188BF0DB16AD2D60006A2602 /* tabbar_background@2x.png in Resources */,
 				188BF0E016AD3375006A2602 /* LeftViewController.xib in Resources */,
@@ -915,6 +949,7 @@
 				C5DAB75B1C6EE4B4001352A2 /* UserModel.m in Sources */,
 				C5B8948E1C8B087500E8E927 /* BaseTableView.m in Sources */,
 				188BEFE116AD19BE006A2602 /* UIViewExt.m in Sources */,
+				22C0F1181CA19C7D0056FBD9 /* DetailViewController.m in Sources */,
 				C52DDBFE1C731F8B00D77E6E /* WeiboView.m in Sources */,
 				188BEFE416AD1A0B006A2602 /* UIUtils.m in Sources */,
 				C5B291771C76E835007B5582 /* NSString+URLEncoding.m in Sources */,
@@ -938,6 +973,7 @@
 				188BF03816AD21CF006A2602 /* MessageViewController.m in Sources */,
 				C52DDC0D1C73204C00D77E6E /* ThemeManager.m in Sources */,
 				188BF03D16AD21FE006A2602 /* ProfileViewController.m in Sources */,
+				22CE89FC1CA1905F0063C12B /* MBProgressHUD.m in Sources */,
 				188BF04216AD224C006A2602 /* DiscoverViewController.m in Sources */,
 				C5DAB75C1C6EE4B4001352A2 /* WeiboModel.m in Sources */,
 				C5B894B61C8B1D3700E8E927 /* WeiboTableView.m in Sources */,
