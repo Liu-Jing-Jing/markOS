@@ -10,4 +10,5 @@
 
 @implementation UserModel
 
+@synthesize description = _description;
 @end
