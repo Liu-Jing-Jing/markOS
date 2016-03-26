@@ -50,7 +50,7 @@
 @property(nonatomic,copy)NSString *screen_name;     //用户昵称
 @property(nonatomic,copy)NSString *name;            //友好显示名称
 @property(nonatomic,copy)NSString *location;        //用户所在地
-@property(nonatomic,copy)NSString *description;     //用户个人描述
+@property(nonatomic,retain)NSString *description;     //用户个人描述
 @property(nonatomic,copy)NSString *url;             //用户博客地址
 @property(nonatomic,copy)NSString * profile_image_url;  //用户头像地址，50×50像素
 @property(nonatomic,copy)NSString * avatar_large;  //用户大头像地址
