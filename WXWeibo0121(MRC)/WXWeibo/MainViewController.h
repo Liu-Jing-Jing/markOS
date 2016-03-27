@@ -11,6 +11,8 @@
 
 @interface MainViewController : UITabBarController<SinaWeiboDelegate> {
     UIView *_tabbarView;
+    UIView *badgeView;
 }
 
+- (void)hideBadge;
 @end

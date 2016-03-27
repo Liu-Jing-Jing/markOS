@@ -13,7 +13,7 @@
 #import "DiscoverViewController.h"
 #import "MoreViewController.h"
 #import "BaseNavigationController.h"
-
+#import "AppDelegate.h"
 @interface MainViewController ()
 
 @end
@@ -36,6 +36,13 @@
     [super viewDidLoad];
     
     [self _initViewController];
+    
+    // 每60秒请求未读微博数目的接口
+    [NSTimer scheduledTimerWithTimeInterval:30
+                                     target:self
+                                   selector:@selector(timerAction:)
+                                   userInfo:nil
+                                    repeats:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,6 +51,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - UI
 //初始化子控制器
 - (void)_initViewController {
     HomeViewController *home = [[HomeViewController alloc] init];
@@ -71,6 +80,57 @@
 
 }
 
+- (void)refreshUnreadView:(NSDictionary *)result
+{
+    // Unread count
+    NSNumber *status = result[@"status"];
+    int n = [status intValue];
+    if (n>0)
+    {
+        NSString *badgeValue;
+        if (n<100)
+        {
+            badgeValue = [NSString stringWithFormat:@"%d", n];
+        }
+        else
+        {
+            badgeValue = @"...";
+        }
+        
+        [(UITabBarItem *)self.tabBar.items[0] setBadgeValue:badgeValue];
+    }
+    else
+    {
+        [(UITabBarItem *)self.tabBar.items[0] setBadgeValue:nil];
+    }
+    
+}
+
+- (void)hideBadge
+{
+    [(UITabBarItem *)self.tabBar.items[0] setBadgeValue:nil];
+}
+
+#pragma mark - handle data
+- (void)loadUnreadData
+{
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    SinaWeibo *sinaweibo = appDelegate.sinaweibo;
+    [sinaweibo requestWithURL:@"remind/unread_count.json"
+                       params:nil
+                   httpMethod:@"GET"
+                        block:^(NSDictionary *result) {
+                            //
+                            [self refreshUnreadView:(NSDictionary *)result];
+                        }];
+    
+}
+
+
+- (void)timerAction:(NSTimer *)timer
+{
+    [self loadUnreadData];
+}
 #pragma mark - SinaWeibo delegate
 - (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo {
     //保存认证的数据到本地
