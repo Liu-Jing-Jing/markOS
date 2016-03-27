@@ -12,8 +12,11 @@
 #import "WeiboWebController.h"
 #import "NSString+URLEncoding.h"
 #import "EGOTableViewPullRefresh/EGORefreshTableHeaderView.h"
-@interface HomeViewController ()<RTLabelDelegate>
+#import <AudioToolbox/AudioToolbox.h>
+#import "MainViewController.h"
+#import "DetailViewController.h"
 
+@interface HomeViewController ()<RTLabelDelegate>
 @property (nonatomic, retain) NSArray *weiboData;
 @end
 
@@ -44,9 +47,8 @@
     UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"注销" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutAction:)];
     self.navigationItem.leftBarButtonItem = [logoutItem autorelease];
     
-    
     self.tableView.eventDelegate = self;
-    
+    self.tableView.hidden = YES;
     
     //判断是否认证
     if (self.sinaweibo.isAuthValid) {
@@ -65,8 +67,76 @@
 //    NSLog(@"HomeVC tableview %p", self.tableView);
 }
 
+#pragma mark - UI
+- (void)showNewWeiboCount:(int)count
+{
+    if(_barView == nil)
+    {
+        _barView = [[UIFactory createImageView:@"timeline_more_button_selected.png"] retain];
+        UIImage *image = [_barView.image stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+        _barView.image = image;
+        _barView.topCapHeight = 5;
+        _barView.leftCapWidth = 5;
+        _barView.frame = CGRectMake(5, -40, ScreenWidth-10, 40);
+        [self.navigationController.navigationBar addSubview:_barView];
+        
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.tag = 200;
+        label.font = [UIFont systemFontOfSize:16];
+        label.backgroundColor = [UIColor clearColor];
+        label.textColor = [UIColor whiteColor];
+        [_barView addSubview:label];
+        [label release];
+    }
+    
+    
+    if(count>=0)
+    {
+        UILabel *label = (UILabel *)[_barView viewWithTag:200];
+        label.text = [NSString stringWithFormat:@"%d条新微博", count];
+        [label sizeToFit];
+        label.origin = CGPointMake((_barView.width-label.width)/2, (_barView.height-label.height)/2);
+        
+        [UIView animateWithDuration:0.6
+                         animations:^{
+                             _barView.top = 3;
+                         }
+                         completion:^(BOOL finished) {
+                             if(finished)
+                             {
+                                 [UIView beginAnimations:nil context:nil];
+                                 [UIView setAnimationDelay:1];
+                                 [UIView setAnimationDuration:0.6];
+                                 _barView.top = -70;
+                                 
+                                 [UIView commitAnimations];
+                             }
+                         }];
+    }
+    
+    
+    // 播放提示声音
+    SystemSoundID  soundID = 0;
+    if (soundID == 0)
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"wav"];
+        NSURL *fileURL = [NSURL URLWithString:path];
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)fileURL, &soundID);
+        AudioServicesPlaySystemSound(soundID);
+    }
+    
+    MainViewController *mainController = (MainViewController *)[self tabBarController];
+    [mainController hideBadge];
+    
+    
+}
+
 #pragma mark - load Data
 - (void)loadWeiboData {
+    // 显示加载提示
+    [super showHUBLoadingTitle:@"Loading..." withDim:YES];
+    
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"20" forKey:@"count"];
     [self.sinaweibo requestWithURL:@"statuses/home_timeline.json"
                             params:params
@@ -127,17 +197,25 @@
     // 显示更新微博的条数
     int updataCount = statues.count;
     NSLog(@"下拉更新, 获得%d条新微博", updataCount);
+    [self showNewWeiboCount:updataCount];
+    
+    
 }
 
 #pragma mark - SinaWeiboRequest delegate
 //网络加载失败
-- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error {
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
     NSLog(@"网络加载失败:%@",error);
 }
 
 //网络加载完成
-- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result {
-
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    // 隐藏HUB，显示table view
+    [super hideHUBLoading];
+    self.tableView.hidden = NO;
+    
     
     NSArray *statues = [result objectForKey:@"statuses"];
     NSMutableArray *weibos = [NSMutableArray arrayWithCapacity:statues.count];
@@ -220,6 +298,30 @@
      */
 }
 
+#pragma mark - 去掉TableViewseparatorInset的线段偏移量
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,6,0,6)];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsMake(0,6,0,6)];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
+    }
+}
+
+
 #pragma mark - 下拉刷新的委托
 #pragma mark - TableView even delegate method
 - (void)pullDown:(BaseTableView *)tableView
@@ -236,6 +338,9 @@
 }
 - (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    DetailViewController *detail = [[DetailViewController alloc] init];
+    detail.weiboModel = _weibos[indexPath.row];
+    [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

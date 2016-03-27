@@ -9,9 +9,11 @@
 
 #import "BaseViewController.h"
 #import "WeiboTableView.h"
+#import "UIFactory.h"
+
 @interface HomeViewController : BaseViewController<SinaWeiboRequestDelegate, UITableViewEvenDelegate>
 {
-    
+    ThemeImageView *_barView;
 }
 
 @property (nonatomic, copy) NSString *topWeibiID;
