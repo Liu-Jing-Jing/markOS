@@ -38,7 +38,7 @@
 }
 
 //override
-//设置导航栏上的标题
+//设置导航栏上的标题 title
 - (void)setTitle:(NSString *)title {
     [super setTitle:title];
     
@@ -62,9 +62,28 @@
 //    // titleLabel.text = @"自定义标题";  //设置标题
 //    self.navigationItem.titleView = titleLabel;
 //}
-- (SinaWeibo *)sinaweibo {
+- (SinaWeibo *)sinaweibo
+{
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     SinaWeibo *sinaweibo = appDelegate.sinaweibo;
     return sinaweibo;
+}
+
+- (void)showHUBLoadingTitle:(NSString *)title withDim:(BOOL)isDim
+{
+    self.hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hub.dimBackground = isDim;
+    self.hub.labelText = title;
+}
+
+- (void)showHUBLoading
+{
+    self.hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hub.dimBackground = YES;
+}
+
+- (void)hideHUBLoading
+{
+    [self.hub hide:YES];
 }
 @end
