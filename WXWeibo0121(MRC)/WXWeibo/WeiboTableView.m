@@ -16,7 +16,20 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-    
+        [self setSeparatorInset:UIEdgeInsetsZero];
+        if ([self respondsToSelector:@selector(setSeparatorInset:)])
+        {
+            
+            [self setSeparatorInset:UIEdgeInsetsZero];
+            
+        }
+        
+        if ([self respondsToSelector:@selector(setLayoutMargins:)])
+        {
+            
+            [self setLayoutMargins:UIEdgeInsetsZero];
+            
+        }
     }
     return self;
 }
@@ -49,6 +62,8 @@
     
     return height;
 }
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
