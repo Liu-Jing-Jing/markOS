@@ -180,15 +180,32 @@
     
     
     //---------------微博图片视图_image------------------
-    NSString *thumbnailImage = _weiboModel.thumbnailImage;
-    if (thumbnailImage != nil && ![@"" isEqualToString:thumbnailImage]) {
-        _image.hidden = NO;
-        _image.frame = CGRectMake(10, _textLabel.bottom+10, 70, 80);
-        
-        //加载网络图片数据
-        [_image setImageWithURL:[NSURL URLWithString:thumbnailImage]];
-    } else {
-        _image.hidden = YES;
+    if(self.isDetail)
+    {
+        NSString *bmiddleImage = _weiboModel.originalImage;
+        if (bmiddleImage != nil && ![@"" isEqualToString:bmiddleImage]) {
+            _image.hidden = NO;
+            _image.frame = CGRectMake(10, _textLabel.bottom+10, 280, 320);
+            
+            //加载网络图片数据
+            [_image setImageWithURL:[NSURL URLWithString:bmiddleImage]];
+        } else {
+            _image.hidden = YES;
+        }
+    }
+    else
+    {
+        NSString *thumbnailImage = _weiboModel.thumbnailImage;
+        if (thumbnailImage != nil && ![@"" isEqualToString:thumbnailImage]) {
+            _image.hidden = NO;
+            _image.frame = CGRectMake(10, _textLabel.bottom+10, 70, 80);
+            
+            //加载网络图片数据
+            [_image setImageWithURL:[NSURL URLWithString:thumbnailImage]];
+        } else {
+            _image.hidden = YES;
+        }
+
     }
     
     //----------------转发的微博视图背景_repostBackgroudView---------------
@@ -251,9 +268,22 @@
     height += textLabel.optimumSize.height;
     
     //--------------------计算微博图片的高度------------------------
-    NSString *thumbnailImage = weiboModel.thumbnailImage;
-    if (thumbnailImage != nil && ![@"" isEqualToString:thumbnailImage]) {
-        height += (80+10);
+    if(isDetail)
+    {
+        NSString *bmiddleImage = weiboModel.bmiddleImage;
+        if (bmiddleImage != nil && ![@"" isEqualToString:bmiddleImage])
+        {
+            height += (320+10);
+        }
+    }
+    else
+    {
+        NSString *thumbnailImage = weiboModel.thumbnailImage;
+        if (thumbnailImage != nil && ![@"" isEqualToString:thumbnailImage])
+        {
+            height += (80+10);
+        }
+
     }
     
     //--------------------计算转发微博视图的高度------------------------
