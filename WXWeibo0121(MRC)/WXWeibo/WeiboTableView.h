@@ -8,6 +8,6 @@
 
 #import "BaseTableView.h"
 
-@interface WeiboTableView : BaseTableView
+@interface WeiboTableView : BaseTableView<UITableViewDelegate>
 
 @end
