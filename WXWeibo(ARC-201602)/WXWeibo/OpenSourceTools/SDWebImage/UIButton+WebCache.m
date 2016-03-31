@@ -1,10 +1,6 @@
 //
 //  UIButton+WebCache.m
 //  WXWeibo
-//
-//  Created by wei.chen on 13-2-4.
-//  Copyright (c) 2013年 www.iphonetrain.com 无限互联3G学院. All rights reserved.
-//
 
 #import "UIButton+WebCache.h"
 #import "SDWebImageManager.h"
