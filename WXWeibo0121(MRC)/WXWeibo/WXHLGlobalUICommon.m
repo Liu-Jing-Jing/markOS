@@ -2,6 +2,7 @@
 //  WXHLGlobalUICommon.m
 //  WXMovie
 
+
 #import "WXHLGlobalUICommon.h"
 
 const CGFloat WXHLkDefaultRowHeight = 44;

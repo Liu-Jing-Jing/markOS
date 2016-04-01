@@ -2,7 +2,6 @@
 //  WXHLGlobalUICommon.h
 //  WXMovie
 
-
 #import <Foundation/Foundation.h>
 
 #define WXHL_ROW_HEIGHT                 WXHLkDefaultRowHeight
