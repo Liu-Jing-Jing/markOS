@@ -1,10 +1,7 @@
 //
 //  ProfileViewController.h
 //  WXWeibo
-//
-//  Created by Mark Lewis on 16-2-3.
-//  Copyright (c) 2016年 TechLewis. All rights reserved.
-//
+//  个人中心控制器
 
 #import "BaseViewController.h"
 

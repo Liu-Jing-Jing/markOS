@@ -1,24 +1,20 @@
 //
-//  LeftViewController.m
+//  ProfileViewController.m
 //  WXWeibo
-//
-//  Created by Mark Lewis on 16-2-4.
-//  Copyright (c) 2016年 TechLewis. All rights reserved.
-//
 
-#import "LeftViewController.h"
+#import "ProfileViewController.h"
 
-@interface LeftViewController ()
+@interface ProfileViewController ()
 
 @end
 
-@implementation LeftViewController
+@implementation ProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.title = @"Profile";
     }
     return self;
 }

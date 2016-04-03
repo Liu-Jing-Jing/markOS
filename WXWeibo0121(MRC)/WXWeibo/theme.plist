@@ -2,9 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>kThemeListLabel</key>
-	<string>0,0,0</string>
-	<key>kNavigationBarTitleLabel</key>
-	<string>0,0,0</string>
+	<key>默认</key>
+	<string></string>
+	<key>blue</key>
+	<string>Skins/blue</string>
+	<key>pink</key>
+	<string>Skins/pink</string>
 </dict>
 </plist>
