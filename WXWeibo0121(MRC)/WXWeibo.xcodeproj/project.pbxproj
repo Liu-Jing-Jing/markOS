@@ -121,6 +121,10 @@
 		22C0F1191CA19C7D0056FBD9 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F1171CA19C7D0056FBD9 /* DetailViewController.xib */; };
 		22CE89FB1CA1905F0063C12B /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 22CE89F81CA1905F0063C12B /* 37x-Checkmark.png */; };
 		22CE89FC1CA1905F0063C12B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE89FA1CA1905F0063C12B /* MBProgressHUD.m */; };
+		22DFA6F91CB0FA7A00164AB2 /* CommentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DFA6F81CB0FA7A00164AB2 /* CommentTableView.m */; };
+		22DFA6FB1CB0FC8A00164AB2 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22DFA6FA1CB0FC8A00164AB2 /* CommentCell.xib */; };
+		22DFA6FE1CB0FEC900164AB2 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DFA6FD1CB0FEC900164AB2 /* CommentCell.m */; };
+		22DFA7011CB103EC00164AB2 /* CommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DFA7001CB103EC00164AB2 /* CommentModel.m */; };
 		C52DDBFD1C731F8B00D77E6E /* WeiboCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52DDBFA1C731F8B00D77E6E /* WeiboCell.m */; };
 		C52DDBFE1C731F8B00D77E6E /* WeiboView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52DDBFC1C731F8B00D77E6E /* WeiboView.m */; };
 		C52DDC091C73204C00D77E6E /* theme.plist in Resources */ = {isa = PBXBuildFile; fileRef = C52DDC001C73204C00D77E6E /* theme.plist */; };
@@ -300,6 +304,13 @@
 		22CE89F81CA1905F0063C12B /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		22CE89F91CA1905F0063C12B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		22CE89FA1CA1905F0063C12B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		22DFA6F71CB0FA7A00164AB2 /* CommentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableView.h; sourceTree = "<group>"; };
+		22DFA6F81CB0FA7A00164AB2 /* CommentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableView.m; sourceTree = "<group>"; };
+		22DFA6FA1CB0FC8A00164AB2 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
+		22DFA6FC1CB0FEC900164AB2 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		22DFA6FD1CB0FEC900164AB2 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		22DFA6FF1CB103EC00164AB2 /* CommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentModel.h; sourceTree = "<group>"; };
+		22DFA7001CB103EC00164AB2 /* CommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentModel.m; sourceTree = "<group>"; };
 		C52DDBF91C731F8B00D77E6E /* WeiboCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboCell.h; sourceTree = "<group>"; };
 		C52DDBFA1C731F8B00D77E6E /* WeiboCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboCell.m; sourceTree = "<group>"; };
 		C52DDBFB1C731F8B00D77E6E /* WeiboView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboView.h; sourceTree = "<group>"; };
@@ -450,6 +461,8 @@
 				C5DAB75A1C6EE4B4001352A2 /* WeiboModel.m */,
 				C5DAB7571C6EE4B4001352A2 /* UserModel.h */,
 				C5DAB7581C6EE4B4001352A2 /* UserModel.m */,
+				22DFA6FF1CB103EC00164AB2 /* CommentModel.h */,
+				22DFA7001CB103EC00164AB2 /* CommentModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -536,6 +549,11 @@
 				188BF0E116AD338D006A2602 /* RightViewController.h */,
 				188BF0E216AD338D006A2602 /* RightViewController.m */,
 				188BF0E316AD338D006A2602 /* RightViewController.xib */,
+				22DFA6F71CB0FA7A00164AB2 /* CommentTableView.h */,
+				22DFA6F81CB0FA7A00164AB2 /* CommentTableView.m */,
+				22DFA6FC1CB0FEC900164AB2 /* CommentCell.h */,
+				22DFA6FD1CB0FEC900164AB2 /* CommentCell.m */,
+				22DFA6FA1CB0FC8A00164AB2 /* CommentCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -858,6 +876,7 @@
 				22CE89FB1CA1905F0063C12B /* 37x-Checkmark.png in Resources */,
 				188BF09416AD2673006A2602 /* main_badge.png in Resources */,
 				188BF09516AD2673006A2602 /* main_badge@2x.png in Resources */,
+				22DFA6FB1CB0FC8A00164AB2 /* CommentCell.xib in Resources */,
 				188BF09616AD2673006A2602 /* msgcome.wav in Resources */,
 				188BF09716AD2673006A2602 /* navigationbar_background.png in Resources */,
 				C52DDC091C73204C00D77E6E /* theme.plist in Resources */,
@@ -959,6 +978,8 @@
 				188BF00E16AD1B80006A2602 /* SDImageCache.m in Sources */,
 				C52DDC0B1C73204C00D77E6E /* ThemeImageView.m in Sources */,
 				188BF00F16AD1B80006A2602 /* SDWebImageDownloader.m in Sources */,
+				22DFA7011CB103EC00164AB2 /* CommentModel.m in Sources */,
+				22DFA6FE1CB0FEC900164AB2 /* CommentCell.m in Sources */,
 				C5B2917E1C76F48A007B5582 /* WeiboWebController.m in Sources */,
 				188BF01016AD1B80006A2602 /* SDWebImageManager.m in Sources */,
 				188BF01116AD1B80006A2602 /* UIImageView+WebCache.m in Sources */,
@@ -979,6 +1000,7 @@
 				C5B894B61C8B1D3700E8E927 /* WeiboTableView.m in Sources */,
 				C52DDC0A1C73204C00D77E6E /* ThemeButton.m in Sources */,
 				188BF04716AD2268006A2602 /* MoreViewController.m in Sources */,
+				22DFA6F91CB0FA7A00164AB2 /* CommentTableView.m in Sources */,
 				188BF0DF16AD3375006A2602 /* LeftViewController.m in Sources */,
 				188BF0E416AD338D006A2602 /* RightViewController.m in Sources */,
 				C52DDBFD1C731F8B00D77E6E /* WeiboCell.m in Sources */,
