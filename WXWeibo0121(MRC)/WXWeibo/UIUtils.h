@@ -13,5 +13,5 @@
 + (NSDate *) dateFromFomate:(NSString *)datestring formate:(NSString*)formate;
 
 + (NSString *)fomateString:(NSString *)datestring;
-
++ (NSString *)parseLink:(NSString *)text;
 @end
