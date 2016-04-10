@@ -5,8 +5,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WXBaseModel : NSObject <NSCoding>{
-
+@interface WXBaseModel : NSObject <NSCoding>
+{
 }
 
 -(id)initWithDataDic:(NSDictionary*)data;
