@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self _initView];
-//        _parserString = [NSMutableString stringWithCapacity:140];
+        //        _parserString = [NSMutableString stringWithCapacity:140];
     }
     
     return self;
@@ -31,7 +31,7 @@
 //初始化子视图
 - (void)_initView {
     
-
+    
     
     
     //微博内容
@@ -75,7 +75,9 @@
     if (_repostView == nil) {
         _repostView = [[WeiboView alloc] initWithFrame:CGRectZero];
         _repostView.isRepost = YES;
-        [self addSubview:_repostView];        
+        _repostView.isDetail = self.isDetail; //很重要，必须保证状态的的一致性
+        
+        [self addSubview:_repostView];
     }
     
     
@@ -127,7 +129,7 @@
         else if ([linkString hasPrefix:@"http"])
         {
             // 网页超链接
-            replacementStr = [NSString stringWithFormat:@"<a href='%@'>%@</a>", linkString, linkString];
+            replacementStr = [NSString stringWithFormat:@"<a href='%@'>%@</a>", linkString, [[linkString substringWithRange:NSMakeRange(0, 12)] stringByAppendingString:@"..."]];
         }
         
         
@@ -178,10 +180,11 @@
     //---------------微博图片视图_image------------------
     if(self.isDetail)
     {
+        // 中等图片
         NSString *bmiddleImage = _weiboModel.originalImage;
         if (bmiddleImage != nil && ![@"" isEqualToString:bmiddleImage]) {
             _image.hidden = NO;
-            _image.frame = CGRectMake(10, _textLabel.bottom+10, 280, 320);
+            _image.frame = CGRectMake(10, _textLabel.bottom+10, 270, 300);
             
             //加载网络图片数据
             [_image setImageWithURL:[NSURL URLWithString:bmiddleImage]];
@@ -191,17 +194,18 @@
     }
     else
     {
+        // 缩略图
         NSString *thumbnailImage = _weiboModel.thumbnailImage;
         if (thumbnailImage != nil && ![@"" isEqualToString:thumbnailImage]) {
             _image.hidden = NO;
-            _image.frame = CGRectMake(10, _textLabel.bottom+10, 70, 80);
+            _image.frame = CGRectMake(10, _textLabel.bottom+10, 66, 80);
             
             //加载网络图片数据
             [_image setImageWithURL:[NSURL URLWithString:thumbnailImage]];
         } else {
             _image.hidden = YES;
         }
-
+        
     }
     
     //----------------转发的微博视图背景_repostBackgroudView---------------
@@ -266,6 +270,7 @@
     //--------------------计算微博图片的高度------------------------
     if(isDetail)
     {
+        // 中等图
         NSString *bmiddleImage = weiboModel.bmiddleImage;
         if (bmiddleImage != nil && ![@"" isEqualToString:bmiddleImage])
         {
@@ -279,7 +284,7 @@
         {
             height += (80+10);
         }
-
+        
     }
     
     //--------------------计算转发微博视图的高度------------------------
@@ -292,7 +297,7 @@
     }
     
     if (isRepost == YES) {
-        height += 30;
+        height += 40;
     }
     
     [textLabel release];
