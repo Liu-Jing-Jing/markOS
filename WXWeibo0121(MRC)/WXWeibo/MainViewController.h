@@ -11,4 +11,5 @@
 }
 
 - (void)hideBadge;
+- (void)showTabbar:(BOOL)isShow;
 @end

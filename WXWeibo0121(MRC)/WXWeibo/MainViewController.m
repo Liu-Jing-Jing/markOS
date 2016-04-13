@@ -10,7 +10,7 @@
 #import "MoreViewController.h"
 #import "BaseNavigationController.h"
 #import "AppDelegate.h"
-@interface MainViewController ()
+@interface MainViewController ()<UINavigationControllerDelegate>
 
 @end
 
@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    // self.hidesBottomBarWhenPushed = YES;
     [self _initViewController];
     
     // 每60秒请求未读微博数目的接口
@@ -47,6 +47,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showTabbar:(BOOL)isShow
+{
+    if(isShow)
+    {
+        // self.tabBar.hidden = NO;
+        UIView *v = self.tabBar;
+        if ([v isKindOfClass:[UITabBar class]] && v.bottom >self.view.bottom)
+        {
+            
+            [UIView animateWithDuration:0.33 delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
+                
+                CGRect frame = v.frame;
+                frame.origin.y -= 49.0f;
+                v.frame = frame;
+                
+            }completion:^(BOOL complete){
+                // isAnimating = NO;
+            }];
+            
+        }
+    }
+    else
+    {
+        // self.tabBar.hidden = YES;
+        UIView *v = self.tabBar;
+        if ([v isKindOfClass:[UITabBar class]])
+        {
+            
+            [UIView animateWithDuration:0.33 delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
+                
+                CGRect frame = v.frame;
+                frame.origin.y += 49.0f;
+                v.frame = frame;
+                
+            }completion:^(BOOL complete){
+                // isAnimating = NO;
+            }];
+            
+        }
+
+    }
+}
 
 #pragma mark - UI
 //初始化子控制器
@@ -61,10 +103,10 @@
     NSMutableArray *viewControllers = [NSMutableArray arrayWithCapacity:5];
     for (UIViewController *viewController in views) {
         BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:viewController];
+        nav.delegate = self;
         [viewControllers addObject:nav];
         [nav release];
     }
-    
     NSArray *tabNormalBackgroud = @[@"tabbar_home.png",@"tabbar_message_center.png",@"tabbar_discover.png",@"tabbar_profile.png",@"tabbar_more.png"];
     self.viewControllers = viewControllers;
     
@@ -148,5 +190,54 @@
     NSLog(@"sinaweiboLogInDidCancel");    
 }
 
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
+{
+    // 得到navigation栈中子控制器的个数
+    int count = navigationController.viewControllers.count;
+    if (count == 2)
+    {
+        [self showTabbar:NO];
+    }
+    else if(count == 1)
+    {
+        [self showTabbar:YES];
+    }
+}
 
+/*  TabBar动画代码
+    for (UIView *v in [self.view subviews])
+    {
+        if ([v isKindOfClass:[UITabBar class]])
+        {
+            
+            [UIView animateWithDuration:3.4 delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
+                
+                CGRect frame = v.frame;
+                frame.origin.y += 49.0f;
+                v.frame = frame;
+                
+            }completion:^(BOOL complete){
+                // isAnimating = NO;
+            }];
+            
+        }
+        else
+        {
+            
+            // isAnimating = YES;
+            
+            [UIView animateWithDuration:0.4 delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
+                
+                CGRect frame = v.frame;
+                frame.size.height += 49.0f;
+                v.frame = frame;
+                
+            } completion:nil];
+        }
+    }
+    
+}
+ */
 @end
