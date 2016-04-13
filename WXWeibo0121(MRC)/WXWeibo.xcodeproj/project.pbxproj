@@ -115,6 +115,14 @@
 		188BF0F916AD3CB3006A2602 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BF0F116AD3CB3006A2602 /* SinaWeibo.m */; };
 		188BF0FA16AD3CB3006A2602 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BF0F316AD3CB3006A2602 /* SinaWeiboAuthorizeView.m */; };
 		188BF0FB16AD3CB3006A2602 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BF0F616AD3CB3006A2602 /* SinaWeiboRequest.m */; };
+		224CF59F1CBCA42600215C07 /* UIView+Addtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 224CF59E1CBCA42600215C07 /* UIView+Addtions.m */; };
+		2265AEBA1CBD1B6B00A2A78F /* UserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2265AEB91CBD1B6B00A2A78F /* UserInfoView.m */; };
+		2265AEBC1CBD1B8300A2A78F /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2265AEBB1CBD1B8300A2A78F /* UserInfoView.xib */; };
+		2265AEBF1CBD205A00A2A78F /* RectButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2265AEBE1CBD205A00A2A78F /* RectButton.m */; };
+		2265AEC31CBD2B6200A2A78F /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2265AEC11CBD2B6200A2A78F /* UserInfoViewController.m */; };
+		2265AEC41CBD2B6200A2A78F /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2265AEC21CBD2B6200A2A78F /* UserInfoViewController.xib */; };
+		2265AEC81CBD2BA000A2A78F /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2265AEC61CBD2BA000A2A78F /* UserViewController.m */; };
+		2265AEC91CBD2BA000A2A78F /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2265AEC71CBD2BA000A2A78F /* UserViewController.xib */; };
 		228EC4D11C9841B200064A7B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228EC4D01C9841B200064A7B /* AudioToolbox.framework */; };
 		228EC4D51C98489F00064A7B /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 228EC4D41C98489F00064A7B /* test.wav */; };
 		22C0F1181CA19C7D0056FBD9 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F1161CA19C7D0056FBD9 /* DetailViewController.m */; };
@@ -296,6 +304,19 @@
 		188BF0F516AD3CB3006A2602 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
 		188BF0F616AD3CB3006A2602 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
 		188BF0FC16AD3D4A006A2602 /* CONSTS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CONSTS.h; sourceTree = "<group>"; };
+		224CF59D1CBCA42600215C07 /* UIView+Addtions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Addtions.h"; sourceTree = "<group>"; };
+		224CF59E1CBCA42600215C07 /* UIView+Addtions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addtions.m"; sourceTree = "<group>"; };
+		2265AEB81CBD1B6B00A2A78F /* UserInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoView.h; sourceTree = "<group>"; };
+		2265AEB91CBD1B6B00A2A78F /* UserInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoView.m; sourceTree = "<group>"; };
+		2265AEBB1CBD1B8300A2A78F /* UserInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoView.xib; sourceTree = "<group>"; };
+		2265AEBD1CBD205A00A2A78F /* RectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectButton.h; sourceTree = "<group>"; };
+		2265AEBE1CBD205A00A2A78F /* RectButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectButton.m; sourceTree = "<group>"; };
+		2265AEC01CBD2B6200A2A78F /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
+		2265AEC11CBD2B6200A2A78F /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		2265AEC21CBD2B6200A2A78F /* UserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoViewController.xib; sourceTree = "<group>"; };
+		2265AEC51CBD2BA000A2A78F /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
+		2265AEC61CBD2BA000A2A78F /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
+		2265AEC71CBD2BA000A2A78F /* UserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		228EC4D01C9841B200064A7B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		228EC4D41C98489F00064A7B /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
 		22C0F1151CA19C7D0056FBD9 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -439,6 +460,9 @@
 		188BEFDE16AD19AD006A2602 /* Uitils */ = {
 			isa = PBXGroup;
 			children = (
+				2265AEC01CBD2B6200A2A78F /* UserInfoViewController.h */,
+				2265AEC11CBD2B6200A2A78F /* UserInfoViewController.m */,
+				2265AEC21CBD2B6200A2A78F /* UserInfoViewController.xib */,
 				188BEFDF16AD19BE006A2602 /* UIViewExt.h */,
 				188BEFE016AD19BE006A2602 /* UIViewExt.m */,
 				188BEFE216AD1A0B006A2602 /* UIUtils.h */,
@@ -448,6 +472,8 @@
 				188BF01A16AD1C3A006A2602 /* CustomCatagory.h */,
 				188BF01B16AD1C3A006A2602 /* CustomCatagory.m */,
 				188BF0FC16AD3D4A006A2602 /* CONSTS.h */,
+				224CF59D1CBCA42600215C07 /* UIView+Addtions.h */,
+				224CF59E1CBCA42600215C07 /* UIView+Addtions.m */,
 			);
 			name = Uitils;
 			sourceTree = "<group>";
@@ -574,6 +600,14 @@
 				188BF03A16AD21FE006A2602 /* ProfileViewController.h */,
 				188BF03B16AD21FE006A2602 /* ProfileViewController.m */,
 				188BF03C16AD21FE006A2602 /* ProfileViewController.xib */,
+				2265AEC51CBD2BA000A2A78F /* UserViewController.h */,
+				2265AEC61CBD2BA000A2A78F /* UserViewController.m */,
+				2265AEC71CBD2BA000A2A78F /* UserViewController.xib */,
+				2265AEB81CBD1B6B00A2A78F /* UserInfoView.h */,
+				2265AEB91CBD1B6B00A2A78F /* UserInfoView.m */,
+				2265AEBB1CBD1B8300A2A78F /* UserInfoView.xib */,
+				2265AEBD1CBD205A00A2A78F /* RectButton.h */,
+				2265AEBE1CBD205A00A2A78F /* RectButton.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -892,6 +926,7 @@
 				188BF09F16AD2673006A2602 /* statusdetail_header_separator.png in Resources */,
 				188BF0A016AD2673006A2602 /* statusdetail_header_separator@2x.png in Resources */,
 				C5B8949A1C8B08E100E8E927 /* blueArrow.png in Resources */,
+				2265AEBC1CBD1B8300A2A78F /* UserInfoView.xib in Resources */,
 				188BF0A116AD2673006A2602 /* tabbar_home.png in Resources */,
 				188BF0A216AD2673006A2602 /* tabbar_home@2x.png in Resources */,
 				188BF0A316AD2673006A2602 /* tabbar_home_highlighted.png in Resources */,
@@ -905,6 +940,7 @@
 				188BF0AA16AD2673006A2602 /* tabbar_message_center_highlighted@2x.png in Resources */,
 				188BF0AB16AD2673006A2602 /* tabbar_message_center_selected.png in Resources */,
 				188BF0AC16AD2673006A2602 /* tabbar_message_center_selected@2x.png in Resources */,
+				2265AEC41CBD2B6200A2A78F /* UserInfoViewController.xib in Resources */,
 				188BF0AD16AD2673006A2602 /* tabbar_more.png in Resources */,
 				188BF0AE16AD2673006A2602 /* tabbar_more@2x.png in Resources */,
 				188BF0AF16AD2673006A2602 /* tabbar_more_highlighted.png in Resources */,
@@ -920,6 +956,7 @@
 				188BF0B816AD2673006A2602 /* tabbar_profile_selected@2x.png in Resources */,
 				188BF0B916AD2673006A2602 /* tabbar_slider.png in Resources */,
 				188BF0BA16AD2673006A2602 /* tabbar_slider@2x.png in Resources */,
+				2265AEC91CBD2BA000A2A78F /* UserViewController.xib in Resources */,
 				188BF0BB16AD2673006A2602 /* tableview_pulltorefresh_arrow.png in Resources */,
 				188BF0BC16AD2673006A2602 /* tableview_pulltorefresh_arrow@2x.png in Resources */,
 				188BF0BD16AD2673006A2602 /* timeline_more_button.png in Resources */,
@@ -981,7 +1018,9 @@
 				22DFA7011CB103EC00164AB2 /* CommentModel.m in Sources */,
 				22DFA6FE1CB0FEC900164AB2 /* CommentCell.m in Sources */,
 				C5B2917E1C76F48A007B5582 /* WeiboWebController.m in Sources */,
+				2265AEC31CBD2B6200A2A78F /* UserInfoViewController.m in Sources */,
 				188BF01016AD1B80006A2602 /* SDWebImageManager.m in Sources */,
+				2265AEBF1CBD205A00A2A78F /* RectButton.m in Sources */,
 				188BF01116AD1B80006A2602 /* UIImageView+WebCache.m in Sources */,
 				188BF01516AD1BE6006A2602 /* RTLabel.m in Sources */,
 				188BF01916AD1C0F006A2602 /* DDMenuController.m in Sources */,
@@ -993,12 +1032,15 @@
 				188BF03316AD215A006A2602 /* HomeViewController.m in Sources */,
 				188BF03816AD21CF006A2602 /* MessageViewController.m in Sources */,
 				C52DDC0D1C73204C00D77E6E /* ThemeManager.m in Sources */,
+				2265AEBA1CBD1B6B00A2A78F /* UserInfoView.m in Sources */,
 				188BF03D16AD21FE006A2602 /* ProfileViewController.m in Sources */,
 				22CE89FC1CA1905F0063C12B /* MBProgressHUD.m in Sources */,
+				2265AEC81CBD2BA000A2A78F /* UserViewController.m in Sources */,
 				188BF04216AD224C006A2602 /* DiscoverViewController.m in Sources */,
 				C5DAB75C1C6EE4B4001352A2 /* WeiboModel.m in Sources */,
 				C5B894B61C8B1D3700E8E927 /* WeiboTableView.m in Sources */,
 				C52DDC0A1C73204C00D77E6E /* ThemeButton.m in Sources */,
+				224CF59F1CBCA42600215C07 /* UIView+Addtions.m in Sources */,
 				188BF04716AD2268006A2602 /* MoreViewController.m in Sources */,
 				22DFA6F91CB0FA7A00164AB2 /* CommentTableView.m in Sources */,
 				188BF0DF16AD3375006A2602 /* LeftViewController.m in Sources */,
