@@ -4,7 +4,7 @@
 //
 #import "BaseViewController.h"
 #import "AppDelegate.h"
-
+#import "WXHLGlobalUICommon.h"
 @interface BaseViewController ()
 
 @end
@@ -15,7 +15,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -27,15 +28,26 @@
 	// Do any additional setup after loading the view.
 }
 
+// 内存不足时调用该方法，iOS6.0或者更老的版本都会调用
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    if(WXHLOSVersion() >= 6.0)
+    {
+        if(self.view.window == nil)
+        {
+            self.view = nil;
+            
+            
+        }
+    }
 }
 
 //override
 //设置导航栏上的标题 title
-- (void)setTitle:(NSString *)title {
+- (void)setTitle:(NSString *)title
+{
     [super setTitle:title];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -81,5 +93,11 @@
 - (void)hideHUBLoading
 {
     [self.hub hide:YES];
+}
+
+- (AppDelegate *)appDelegate
+{
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return appDelegate;
 }
 @end
