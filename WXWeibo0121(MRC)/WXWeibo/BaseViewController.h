@@ -6,7 +6,7 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 #import "MBProgressHUD.h"
-
+#import "AppDelegate.h"
 @interface BaseViewController : UIViewController
 
 - (SinaWeibo *)sinaweibo;
@@ -17,4 +17,6 @@
 - (void)showHUBLoadingTitle:(NSString *)title withDim:(BOOL)isDim;
 - (void)showHUBLoading;
 - (void)hideHUBLoading;
+
+- (AppDelegate *)appDelegate;
 @end
