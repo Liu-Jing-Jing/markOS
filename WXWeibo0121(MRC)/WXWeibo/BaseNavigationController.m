@@ -37,11 +37,13 @@
     [self.navigationBar setTintColor:[UIColor whiteColor]];
     
 //    float version = WXHLOSVersion();
-//    if (version >= 5.0) {
+//    if (version >= 5.0)
+//    {
 //        UIImage *image = [UIImage imageNamed:@"navigationbar_background.png"];
 //        [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 //    }
-//    if ([self.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+//    if ([self.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+//    {
 //        [self.navigationBar setBackgroundImage:<#(UIImage *)#> forBarMetrics:<#(UIBarMetrics)#>]
 //    }
 }
