@@ -20,7 +20,8 @@
 }
 
 //初始化微博对象
-- (void)_initSinaWeibo {
+- (void)_initSinaWeibo
+{
     _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI andDelegate:_mainCtrl];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -44,16 +45,14 @@
     RightViewController *rightCtrl = [[RightViewController alloc] init];
     
     //初始化左右菜单
-    DDMenuController *menuCtrl = [[DDMenuController alloc] initWithRootViewController:_mainCtrl];
-    menuCtrl.leftViewController = leftCtrl;
-    menuCtrl.rightViewController = rightCtrl;
+    _menuCtrl = [[DDMenuController alloc] initWithRootViewController:_mainCtrl];
+    _menuCtrl.leftViewController = leftCtrl;
+    _menuCtrl.rightViewController = rightCtrl;
 
     //初始化微博对象
     [self _initSinaWeibo];
     
-    self.window.rootViewController = menuCtrl;
-    [menuCtrl release];
-    
+    self.window.rootViewController = _menuCtrl;
     return YES;
 }
 
