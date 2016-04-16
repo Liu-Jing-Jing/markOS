@@ -11,7 +11,9 @@
 #import "BaseNavigationController.h"
 #import "AppDelegate.h"
 @interface MainViewController ()<UINavigationControllerDelegate>
-
+{
+    HomeViewController *_home;
+}
 @end
 
 @implementation MainViewController
@@ -92,16 +94,18 @@
 
 #pragma mark - UI
 //初始化子控制器
-- (void)_initViewController {
-    HomeViewController *home = [[HomeViewController alloc] init];
+- (void)_initViewController
+{
+    _home = [[HomeViewController alloc] init];
     MessageViewController *message = [[MessageViewController alloc] init];
     ProfileViewController *profile = [[ProfileViewController alloc] init];
     DiscoverViewController *discover = [[DiscoverViewController alloc] init];
     // MoreViewController *more = [[MoreViewController alloc] init];
     
-    NSArray *views = @[home,message,discover,profile];
+    NSArray *views = @[_home,message,discover,profile];
     NSMutableArray *viewControllers = [NSMutableArray arrayWithCapacity:5];
-    for (UIViewController *viewController in views) {
+    for (UIViewController *viewController in views)
+    {
         BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:viewController];
         nav.delegate = self;
         [viewControllers addObject:nav];
@@ -132,7 +136,7 @@
         }
         else
         {
-            badgeValue = @"...";
+            badgeValue = @"99+";
         }
         
         [(UITabBarItem *)self.tabBar.items[0] setBadgeValue:badgeValue];
@@ -170,7 +174,9 @@
     [self loadUnreadData];
 }
 #pragma mark - SinaWeibo delegate
-- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo {
+// 登录成功协议方法
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
     //保存认证的数据到本地
     NSDictionary *authData = [NSDictionary dictionaryWithObjectsAndKeys:
                               sinaweibo.accessToken, @"AccessTokenKey",
@@ -179,14 +185,20 @@
                               sinaweibo.refreshToken, @"refresh_token", nil];
     [[NSUserDefaults standardUserDefaults] setObject:authData forKey:@"SinaWeiboAuthData"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [_home loadWeiboData];
 }
 
-- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo {
+// 注销协议方法
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
     //移除认证的数据
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];  // 注意要添加同步代码，可能导致崩溃
 }
 
-- (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo {
+- (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
+{
     NSLog(@"sinaweiboLogInDidCancel");    
 }
 

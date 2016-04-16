@@ -4,8 +4,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
-
-@interface MainViewController : UITabBarController<SinaWeiboDelegate> {
+@class AppDelegate;
+@interface MainViewController : UITabBarController<SinaWeiboDelegate>
+{
     UIView *_tabbarView;
     UIView *badgeView;
 }
