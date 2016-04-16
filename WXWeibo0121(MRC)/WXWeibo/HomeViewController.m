@@ -3,6 +3,7 @@
 //  WXWeibo
 
 #import "HomeViewController.h"
+#import "MainViewController.h"
 #import "WeiboModel.h"
 #import "RTLabel.h"
 #import "WeiboWebController.h"
@@ -21,8 +22,9 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        self.title = @"Weibo";
+    if (self)
+    {
+        self.title = @"Weibo";        
     }
     return self;
 }
@@ -47,7 +49,8 @@
     self.tableView.hidden = YES;
     
     //判断是否认证
-    if (self.sinaweibo.isAuthValid) {
+    if (self.sinaweibo.isAuthValid)
+    {
         //加载微博列表数据
         NSLog(@"已经认证");
         self.navigationItem.leftBarButtonItem = nil;
@@ -58,9 +61,29 @@
     {
         self.navigationItem.leftBarButtonItem = logoutItem;
         self.navigationItem.rightBarButtonItem = bindItem;
+        [self.sinaweibo logIn];
     }
     
 //    NSLog(@"HomeVC tableview %p", self.tableView);
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [(MainViewController *)self.tabBarController showTabbar:YES];
+    // turn on DDMenu
+    [[[self appDelegate] menuCtrl] setEnableGesture:YES];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    // disable the DDMenu Gesture
+    [[[self appDelegate] menuCtrl] setEnableGesture:NO];
 }
 
 #pragma mark - UI
@@ -129,7 +152,8 @@
 }
 
 #pragma mark - load Data
-- (void)loadWeiboData {
+- (void)loadWeiboData
+{
     // 显示加载提示
     [super showHUBLoadingTitle:@"Loading..." withDim:YES];
     
@@ -162,7 +186,8 @@
 {
     NSArray *statues = [result objectForKey:@"statuses"];
     NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:statues.count];
-    for (NSDictionary *statuesDic in statues) {
+    for (NSDictionary *statuesDic in statues)
+    {
         WeiboModel *weibo = [[WeiboModel alloc] initWithDataDic:statuesDic];
         [newArray addObject:weibo];
         [weibo release];
@@ -195,9 +220,63 @@
     NSLog(@"下拉更新, 获得%d条新微博", updataCount);
     [self showNewWeiboCount:updataCount];
     
-    
 }
 
+// 上拉加载最新微博
+- (void)pullUpData
+{
+    if(self.lastWeibiID.length == 0)
+    {
+        NSLog(@"Weibo id is null");
+        return;
+    }
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[@"20", self.lastWeibiID] forKeys:@[@"count", @"max_id"]];
+    [self.sinaweibo requestWithURL:@"statuses/home_timeline.json"
+                            params:params
+                        httpMethod:@"GET"
+                             block:^(id result) {
+                                 [self pullUpFinishData:result];
+                             }];
+
+}
+// 上拉加载完成
+- (void)pullUpFinishData:(id)result
+{
+    NSArray *statues = [result objectForKey:@"statuses"];
+    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:statues.count];
+    for (NSDictionary *statuesDic in statues)
+    {
+        WeiboModel *weibo = [[WeiboModel alloc] initWithDataDic:statuesDic];
+        [newArray addObject:weibo];
+        [weibo release];
+    }
+    
+    // 更新last ID
+    if (newArray.count > 0)
+    {
+        WeiboModel *lastWeibo = [newArray lastObject];
+        self.lastWeibiID = [lastWeibo.weiboId stringValue];
+        
+        // 去掉重复的微博
+        [newArray removeObjectAtIndex:0];
+    }
+    [self.weibos addObjectsFromArray:newArray];
+
+    
+    if(statues.count<20)
+    {
+        self.tableView.isMore = NO;
+    }
+    else
+    {
+        self.tableView.isMore = YES;
+    }
+    // refresh UI
+    self.tableView.data = self.weibos;
+    [self.tableView reloadData];
+
+}
 #pragma mark - SinaWeiboRequest delegate
 //网络加载失败
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
@@ -215,7 +294,8 @@
     
     NSArray *statues = [result objectForKey:@"statuses"];
     NSMutableArray *weibos = [NSMutableArray arrayWithCapacity:statues.count];
-    for (NSDictionary *statuesDic in statues) {
+    for (NSDictionary *statuesDic in statues)
+    {
         WeiboModel *weibo = [[WeiboModel alloc] initWithDataDic:statuesDic];
         [weibos addObject:weibo];
         [weibo release];
@@ -227,7 +307,11 @@
     {
         WeiboModel *topWeibo = weibos[0];
         self.topWeibiID = [topWeibo.weiboId stringValue];
+        
+        WeiboModel *lastWeibo = [weibos lastObject];
+        self.lastWeibiID = [lastWeibo.weiboId stringValue];
     }
+    
     
     // refresh
     [self.tableView reloadData];
@@ -256,11 +340,13 @@
 
 
 #pragma mark - actions
-- (void)bindAction:(UIBarButtonItem *)buttonItem {
+- (void)bindAction:(UIBarButtonItem *)buttonItem
+{
     [self.sinaweibo logIn];
 }
 
-- (void)logoutAction:(UIBarButtonItem *)buttonItem {
+- (void)logoutAction:(UIBarButtonItem *)buttonItem
+{
     [self.sinaweibo logOut];
 }
 
@@ -297,22 +383,26 @@
 #pragma mark - 去掉TableViewseparatorInset的线段偏移量
 -(void)viewDidLayoutSubviews
 {
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)])
+    {
         [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,6,0,6)];
     }
     
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])
+    {
         [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
     }
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)])
+    {
         [cell setSeparatorInset:UIEdgeInsetsMake(0,6,0,6)];
     }
     
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)])
+    {
         [cell setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
     }
 }
@@ -328,9 +418,10 @@
     [tableView performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1];
 }
 
-- (void)puuUp:(BaseTableView *)tableView
+// 上拉调用，协议方法
+- (void)pullUp:(BaseTableView *)tableView;
 {
-    
+    [self pullUpData];
 }
 - (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

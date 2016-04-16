@@ -14,6 +14,9 @@
 }
 
 @property (nonatomic, copy) NSString *topWeibiID;
+@property (nonatomic, copy) NSString *lastWeibiID;
 @property (retain, nonatomic) IBOutlet WeiboTableView *tableView;
 @property (nonatomic, retain) NSMutableArray *weibos;
+
+- (void)loadWeiboData;
 @end
