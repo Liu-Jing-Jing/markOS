@@ -32,7 +32,8 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-typedef enum {
+typedef enum
+{
     /** Progress is shown using an UIActivityIndicatorView. This is the default. */
     MBProgressHUDModeIndeterminate,
     /** Progress is shown using a MBRoundProgressView. */
@@ -41,7 +42,8 @@ typedef enum {
 	MBProgressHUDModeCustomView
 } MBProgressHUDMode;
 
-typedef enum {
+typedef enum
+{
     /** Opacity animation */
     MBProgressHUDAnimationFade,
     /** Opacity + scale animation */
@@ -68,7 +70,8 @@ typedef enum {
  *   indicator view.
  * - If also the detailsLabelText property is set then another label is placed below the first label.
  */
-@interface MBProgressHUD : UIView {
+@interface MBProgressHUD : UIView
+{
 	
 	MBProgressHUDMode mode;
     MBProgressHUDAnimation animationType;
@@ -387,7 +390,8 @@ typedef enum {
 /**
  * A progress view for showing definite progress by filling up a circle (pie chart).
  */
-@interface MBRoundProgressView : UIView {
+@interface MBRoundProgressView : UIView
+{
 @private
     float _progress;
 }
