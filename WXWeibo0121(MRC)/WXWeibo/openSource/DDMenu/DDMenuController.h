@@ -26,12 +26,14 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum {
+typedef enum
+{
     DDMenuPanDirectionLeft = 0,
     DDMenuPanDirectionRight,
 } DDMenuPanDirection;
 
-typedef enum {
+typedef enum
+{
     DDMenuPanCompletionLeft = 0,
     DDMenuPanCompletionRight,
     DDMenuPanCompletionRoot,
@@ -47,7 +49,8 @@ typedef enum {
     CGPoint _panVelocity;
     DDMenuPanDirection _panDirection;
 
-    struct {
+    struct
+    {
         unsigned int respondsToWillShowViewController:1;
         unsigned int showingLeftView:1;
         unsigned int showingRightView:1;

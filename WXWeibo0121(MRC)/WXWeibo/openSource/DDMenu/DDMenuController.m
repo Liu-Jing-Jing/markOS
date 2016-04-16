@@ -50,32 +50,39 @@
 @synthesize pan=_pan;
 
 
-- (id)initWithRootViewController:(UIViewController*)controller {
-    if ((self = [super init])) {
+- (id)initWithRootViewController:(UIViewController*)controller
+{
+    if ((self = [super init]))
+    {
         _root = controller;
     }
     return self;
 }
 
-- (id)init {
-    if ((self = [super init])) {
+- (id)init
+{
+    if ((self = [super init]))
+    {
         
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self setRootViewController:_root]; // reset root
     
-    if (!_tap) {
+    if (!_tap)
+    {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         tap.delegate = (id<UIGestureRecognizerDelegate>)self;
         [self.view addGestureRecognizer:tap];
@@ -85,34 +92,43 @@
     
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload
+{
     [super viewDidUnload];
     _tap = nil;
     _pan = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
     return [_root shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-    if (_root) {
+    if (_root)
+    {
         
         [_root willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
         UIView *view = _root.view;
 
-        if (_menuFlags.showingRightView) {
+        if (_menuFlags.showingRightView)
+        {
 
             view.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
             
-        } else if (_menuFlags.showingLeftView) {
+        }
+        else if (_menuFlags.showingLeftView)
+        {
            
             view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 
-        } else {
+        }
+        else
+        {
             
             view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             
@@ -122,19 +138,25 @@
     
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-    if (_root) {
+    if (_root)
+    {
         
         [_root didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
         CGRect frame = self.view.bounds;
-        if (_menuFlags.showingLeftView) {
+        if (_menuFlags.showingLeftView)
+        {
             frame.origin.x = frame.size.width - kMenuOverlayWidth;
-        } else if (_menuFlags.showingRightView) {
+        }
+        else if (_menuFlags.showingRightView)
+        {
             frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
         }
+        
         _root.view.frame = frame;
         _root.view.autoresizingMask = self.view.autoresizingMask;
         
@@ -144,10 +166,12 @@
     
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-    if (_root) {
+    if (_root)
+    {
         [_root willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     }
     
@@ -156,26 +180,33 @@
 
 #pragma mark - GestureRecognizers
 
-- (void)pan:(UIPanGestureRecognizer*)gesture {
+- (void)pan:(UIPanGestureRecognizer*)gesture
+{
 
-    if (gesture.state == UIGestureRecognizerStateBegan) {
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
         
         [self showShadow:YES];
         _panOriginX = self.view.frame.origin.x;        
         _panVelocity = CGPointMake(0.0f, 0.0f);
         
-        if([gesture velocityInView:self.view].x > 0) {
+        if([gesture velocityInView:self.view].x > 0)
+        {
             _panDirection = DDMenuPanDirectionRight;
-        } else {
+        }
+        else
+        {
             _panDirection = DDMenuPanDirectionLeft;
         }
 
     }
     
-    if (gesture.state == UIGestureRecognizerStateChanged) {
+    if (gesture.state == UIGestureRecognizerStateChanged)
+    {
         
         CGPoint velocity = [gesture velocityInView:self.view];
-        if((velocity.x*_panVelocity.x + velocity.y*_panVelocity.y) < 0) {
+        if((velocity.x*_panVelocity.x + velocity.y*_panVelocity.y) < 0)
+        {
             _panDirection = (_panDirection == DDMenuPanDirectionRight) ? DDMenuPanDirectionLeft : DDMenuPanDirectionRight;
         }
         
@@ -184,14 +215,17 @@
         CGRect frame = _root.view.frame;
         frame.origin.x = _panOriginX + translation.x;
         
-        if (frame.origin.x > 0.0f && !_menuFlags.showingLeftView) {
+        if (frame.origin.x > 0.0f && !_menuFlags.showingLeftView)
+        {
             
-            if(_menuFlags.showingRightView) {
+            if(_menuFlags.showingRightView)
+            {
                 _menuFlags.showingRightView = NO;
                 [self.rightViewController.view removeFromSuperview];
             }
             
-            if (_menuFlags.canShowLeft) {
+            if (_menuFlags.canShowLeft)
+            {
                 
                 _menuFlags.showingLeftView = YES;
                 CGRect frame = self.view.bounds;
@@ -199,18 +233,24 @@
                 self.leftViewController.view.frame = frame;
                 [self.view insertSubview:self.leftViewController.view atIndex:0];
                 
-            } else {
+            }
+            else
+            {
                 frame.origin.x = 0.0f; // ignore right view if it's not set
             }
             
-        } else if (frame.origin.x < 0.0f && !_menuFlags.showingRightView) {
+        }
+        else if (frame.origin.x < 0.0f && !_menuFlags.showingRightView)
+        {
             
-            if(_menuFlags.showingLeftView) {
+            if(_menuFlags.showingLeftView)
+            {
                 _menuFlags.showingLeftView = NO;
                 [self.leftViewController.view removeFromSuperview];
             }
             
-            if (_menuFlags.canShowRight) {
+            if (_menuFlags.canShowRight)
+            {
                 
                 _menuFlags.showingRightView = YES;
                 CGRect frame = self.view.bounds;
@@ -219,7 +259,9 @@
                 self.rightViewController.view.frame = frame;
                 [self.view insertSubview:self.rightViewController.view atIndex:0];
      
-            } else {
+            }
+            else
+            {
                 frame.origin.x = 0.0f; // ignore left view if it's not set
             }
             
@@ -227,21 +269,27 @@
         
         _root.view.frame = frame;
 
-    } else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled) {
+    }
+    else if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled)
+    {
         
         //  Finishing moving to left, right or root view with current pan velocity
         [self.view setUserInteractionEnabled:NO];
         
         DDMenuPanCompletion completion = DDMenuPanCompletionRoot; // by default animate back to the root
         
-        if (_panDirection == DDMenuPanDirectionRight && _menuFlags.showingLeftView) {
+        if (_panDirection == DDMenuPanDirectionRight && _menuFlags.showingLeftView)
+        {
             completion = DDMenuPanCompletionLeft;
-        } else if (_panDirection == DDMenuPanDirectionLeft && _menuFlags.showingRightView) {
+        }
+        else if (_panDirection == DDMenuPanDirectionLeft && _menuFlags.showingRightView)
+        {
             completion = DDMenuPanCompletionRight;
         }
         
         CGPoint velocity = [gesture velocityInView:self.view];    
-        if (velocity.x < 0.0f) {
+        if (velocity.x < 0.0f)
+        {
             velocity.x *= -1.0f;
         }
         BOOL bounce = (velocity.x > 800);
@@ -251,19 +299,27 @@
         CGFloat duration = kMenuSlideDuration; // default duration with 0 velocity
         
         
-        if (bounce) {
+        if (bounce)
+        {
             duration = (span / velocity.x); // bouncing we'll use the current velocity to determine duration
-        } else {
+        }
+        else
+        {
             duration = ((span - originX) / span) * duration; // user just moved a little, use the defult duration, otherwise it would be too slow
         }
         
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
-            if (completion == DDMenuPanCompletionLeft) {
+            if (completion == DDMenuPanCompletionLeft)
+            {
                 [self showLeftController:NO];
-            } else if (completion == DDMenuPanCompletionRight) {
+            }
+            else if (completion == DDMenuPanCompletionRight)
+            {
                 [self showRightController:NO];
-            } else {
+            }
+            else
+            {
                 [self showRootController:NO];
             }
             [_root.view.layer removeAllAnimations];
@@ -280,24 +336,33 @@
         [values addObject:[NSValue valueWithCGPoint:pos]];
         [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
         [keyTimes addObject:[NSNumber numberWithFloat:0.0f]];
-        if (bounce) {
+        if (bounce)
+        {
             
             duration += kMenuBounceDuration;
             [keyTimes addObject:[NSNumber numberWithFloat:1.0f - ( kMenuBounceDuration / duration)]];
-            if (completion == DDMenuPanCompletionLeft) {
+            if (completion == DDMenuPanCompletionLeft)
+            {
                 
                 [values addObject:[NSValue valueWithCGPoint:CGPointMake(((width/2) + span) + kMenuBounceOffset, pos.y)]];
                 
-            } else if (completion == DDMenuPanCompletionRight) {
+            }
+            else if (completion == DDMenuPanCompletionRight)
+            {
                 
                 [values addObject:[NSValue valueWithCGPoint:CGPointMake(-((width/2) - (kMenuOverlayWidth-kMenuBounceOffset)), pos.y)]];
                 
-            } else {
+            }
+            else
+            {
                 
                 // depending on which way we're panning add a bounce offset
-                if (_panDirection == DDMenuPanDirectionLeft) {
+                if (_panDirection == DDMenuPanDirectionLeft)
+                {
                     [values addObject:[NSValue valueWithCGPoint:CGPointMake((width/2) - kMenuBounceOffset, pos.y)]];
-                } else {
+                }
+                else
+                {
                     [values addObject:[NSValue valueWithCGPoint:CGPointMake((width/2) + kMenuBounceOffset, pos.y)]];
                 }
                 
@@ -306,11 +371,16 @@
             [timingFunctions addObject:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
             
         }
-        if (completion == DDMenuPanCompletionLeft) {
+        if (completion == DDMenuPanCompletionLeft)
+        {
             [values addObject:[NSValue valueWithCGPoint:CGPointMake((width/2) + span, pos.y)]];
-        } else if (completion == DDMenuPanCompletionRight) {
+        }
+        else if (completion == DDMenuPanCompletionRight)
+        {
             [values addObject:[NSValue valueWithCGPoint:CGPointMake(-((width/2) - kMenuOverlayWidth), pos.y)]];
-        } else {
+        }
+        else
+        {
             [values addObject:[NSValue valueWithCGPoint:CGPointMake(width/2, pos.y)]];
         }
         
@@ -331,7 +401,8 @@
     
 }
 
-- (void)tap:(UITapGestureRecognizer*)gesture {
+- (void)tap:(UITapGestureRecognizer*)gesture
+{
     
     [gesture setEnabled:NO];
     [self showRootController:YES];
@@ -341,24 +412,29 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
 
     // Check for horizontal pan gesture
-    if (gestureRecognizer == _pan) {
+    if (gestureRecognizer == _pan)
+    {
 
         UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer*)gestureRecognizer;
         CGPoint translation = [panGesture translationInView:self.view];
 
-        if ([panGesture velocityInView:self.view].x < 600 && sqrt(translation.x * translation.x) / sqrt(translation.y * translation.y) > 1) {
+        if ([panGesture velocityInView:self.view].x < 600 && sqrt(translation.x * translation.x) / sqrt(translation.y * translation.y) > 1)
+        {
             return YES;
         } 
         
         return NO;
     }
     
-    if (gestureRecognizer == _tap) {
+    if (gestureRecognizer == _tap)
+    {
         
-        if (_root && (_menuFlags.showingRightView || _menuFlags.showingLeftView)) {
+        if (_root && (_menuFlags.showingRightView || _menuFlags.showingLeftView))
+        {
             return CGRectContainsPoint(_root.view.frame, [gestureRecognizer locationInView:self.view]);
         }
         
@@ -370,8 +446,10 @@
    
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (gestureRecognizer==_tap) {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (gestureRecognizer==_tap)
+    {
         return YES;
     }     
     return NO;
@@ -380,49 +458,64 @@
 
 #pragma Internal Nav Handling 
 
-- (void)resetNavButtons {
+- (void)resetNavButtons
+{
     if (!_root) return;
     
     UIViewController *topController = nil;
-    if ([_root isKindOfClass:[UINavigationController class]]) {
+    if ([_root isKindOfClass:[UINavigationController class]])
+    {
         
         UINavigationController *navController = (UINavigationController*)_root;
-        if ([[navController viewControllers] count] > 0) {
+        if ([[navController viewControllers] count] > 0)
+        {
             topController = [[navController viewControllers] objectAtIndex:0];
         }
         
-    } else if ([_root isKindOfClass:[UITabBarController class]]) {
+    }
+    else if ([_root isKindOfClass:[UITabBarController class]])
+    {
         
         UITabBarController *tabController = (UITabBarController*)_root;
         topController = [tabController selectedViewController];
         
-    } else {
+    }
+    else
+    {
         
         topController = _root;
         
     }
     
-    if (_menuFlags.canShowLeft) {
+    if (_menuFlags.canShowLeft)
+    {
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_menu_icon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft:)];
         topController.navigationItem.leftBarButtonItem = button;
-    } else {
+    }
+    else
+    {
         topController.navigationItem.leftBarButtonItem = nil;
     }
     
-    if (_menuFlags.canShowRight) {
+    if (_menuFlags.canShowRight)
+    {
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_menu_icon.png"] style:UIBarButtonItemStyleBordered  target:self action:@selector(showRight:)];
         topController.navigationItem.rightBarButtonItem = button;
-    } else {
+    }
+    else
+    {
         topController.navigationItem.rightBarButtonItem = nil;
     }
     
 }
 
-- (void)showShadow:(BOOL)val {
+- (void)showShadow:(BOOL)val
+{
     if (!_root) return;
     
     _root.view.layer.shadowOpacity = val ? 0.8f : 0.0f;
-    if (val) {
+    if (val)
+    {
         _root.view.layer.cornerRadius = 4.0f;
         _root.view.layer.shadowOffset = CGSizeZero;
         _root.view.layer.shadowRadius = 4.0f;
@@ -431,7 +524,8 @@
     
 }
 
-- (void)showRootController:(BOOL)animated {
+- (void)showRootController:(BOOL)animated
+{
     
     [_tap setEnabled:NO];
     _root.view.userInteractionEnabled = YES;
@@ -440,7 +534,8 @@
     frame.origin.x = 0.0f;
 
     BOOL _enabled = [UIView areAnimationsEnabled];
-    if (!animated) {
+    if (!animated)
+    {
         [UIView setAnimationsEnabled:NO];
     }
     
@@ -450,11 +545,14 @@
         
     } completion:^(BOOL finished) {
         
-        if (_left && _left.view.superview) {
+        if (_left && _left.view.superview)
+        {
             [_left.view removeFromSuperview];
         }
         
-        if (_right && _right.view.superview) {
+        
+        if (_right && _right.view.superview)
+        {
             [_right.view removeFromSuperview];
         }
         
@@ -465,21 +563,25 @@
         
     }];
     
-    if (!animated) {
+    if (!animated)
+    {
         [UIView setAnimationsEnabled:_enabled];
     }
     
 }
 
-- (void)showLeftController:(BOOL)animated {
+- (void)showLeftController:(BOOL)animated
+{
     if (!_menuFlags.canShowLeft) return;
     
-    if (_right && _right.view.superview) {
+    if (_right && _right.view.superview)
+    {
         [_right.view removeFromSuperview];
         _menuFlags.showingRightView = NO;
     }
     
-    if (_menuFlags.respondsToWillShowViewController) {
+    if (_menuFlags.respondsToWillShowViewController)
+    {
         [self.delegate menuController:self willShowViewController:self.leftViewController];
     }
     _menuFlags.showingLeftView = YES;
@@ -496,7 +598,8 @@
     frame.origin.x = CGRectGetMaxX(view.frame) - (kMenuFullWidth - kMenuDisplayedWidth);
     
     BOOL _enabled = [UIView areAnimationsEnabled];
-    if (!animated) {
+    if (!animated)
+    {
         [UIView setAnimationsEnabled:NO];
     }
     
@@ -507,21 +610,25 @@
         [_tap setEnabled:YES];
     }];
     
-    if (!animated) {
+    if (!animated)
+    {
         [UIView setAnimationsEnabled:_enabled];
     }
     
 }
 
-- (void)showRightController:(BOOL)animated {
+- (void)showRightController:(BOOL)animated
+{
     if (!_menuFlags.canShowRight) return;
     
-    if (_left && _left.view.superview) {
+    if (_left && _left.view.superview)
+    {
         [_left.view removeFromSuperview];
         _menuFlags.showingLeftView = NO;
     }
     
-    if (_menuFlags.respondsToWillShowViewController) {
+    if (_menuFlags.respondsToWillShowViewController)
+    {
         [self.delegate menuController:self willShowViewController:self.rightViewController];
     }
     _menuFlags.showingRightView = YES;
@@ -538,7 +645,8 @@
     frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
     
     BOOL _enabled = [UIView areAnimationsEnabled];
-    if (!animated) {
+    if (!animated)
+    {
         [UIView setAnimationsEnabled:NO];
     }
     
@@ -549,7 +657,8 @@
         [_tap setEnabled:YES];
     }];
     
-    if (!animated) {
+    if (!animated)
+    {
         [UIView setAnimationsEnabled:_enabled];
     }
 }
@@ -557,30 +666,36 @@
 
 #pragma mark Setters
 
-- (void)setDelegate:(id<DDMenuControllerDelegate>)val {
+- (void)setDelegate:(id<DDMenuControllerDelegate>)val
+{
     delegate = val;
     _menuFlags.respondsToWillShowViewController = [(id)self.delegate respondsToSelector:@selector(menuController:willShowViewController:)];    
 }
 
-- (void)setRightViewController:(UIViewController *)rightController {
+- (void)setRightViewController:(UIViewController *)rightController
+{
     _right = rightController;
     _menuFlags.canShowRight = (_right!=nil);
     [self resetNavButtons];
 }
 
-- (void)setLeftViewController:(UIViewController *)leftController {
+- (void)setLeftViewController:(UIViewController *)leftController
+{
     _left = leftController;
     _menuFlags.canShowLeft = (_left!=nil);
     [self resetNavButtons];
 }
 
-- (void)setRootViewController:(UIViewController *)rootViewController {
+- (void)setRootViewController:(UIViewController *)rootViewController
+{
     UIViewController *tempRoot = _root;
     _root = rootViewController;
     
-    if (_root) {
+    if (_root)
+    {
         
-        if (tempRoot) {
+        if (tempRoot)
+        {
             [tempRoot.view removeFromSuperview];
             tempRoot = nil;
         }
@@ -594,9 +709,12 @@
         [view addGestureRecognizer:pan];
         _pan = pan;
         
-    } else {
+    }
+    else
+    {
         
-        if (tempRoot) {
+        if (tempRoot)
+        {
             [tempRoot.view removeFromSuperview];
             tempRoot = nil;
         }
@@ -606,14 +724,17 @@
     [self resetNavButtons];
 }
 
-- (void)setRootController:(UIViewController *)controller animated:(BOOL)animated {
+- (void)setRootController:(UIViewController *)controller animated:(BOOL)animated
+{
    
-    if (!controller) {
+    if (!controller)
+    {
         [self setRootViewController:controller];
         return;
     }
     
-    if (_menuFlags.showingLeftView) {
+    if (_menuFlags.showingLeftView)
+    {
         
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -637,7 +758,9 @@
             
         }];
         
-    } else {
+    }
+    else
+    {
         
         // just add the root and move to it if it's not center
         [self setRootViewController:controller];
@@ -650,33 +773,40 @@
 
 #pragma mark - Root Controller Navigation
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
     
     NSAssert((_root!=nil), @"no root controller set");
     
     UINavigationController *navController = nil;
     
-    if ([_root isKindOfClass:[UINavigationController class]]) {
+    if ([_root isKindOfClass:[UINavigationController class]])
+    {
     
         navController = (UINavigationController*)_root;
     
-    } else if ([_root isKindOfClass:[UITabBarController class]]) {
+    }
+    else if ([_root isKindOfClass:[UITabBarController class]])
+    {
         
         UIViewController *topController = [(UITabBarController*)_root selectedViewController];
-        if ([topController isKindOfClass:[UINavigationController class]]) {
+        if ([topController isKindOfClass:[UINavigationController class]])
+        {
             navController = (UINavigationController*)topController;
         }
         
     } 
     
-    if (navController == nil) {
+    if (navController == nil)
+    {
        
         NSLog(@"root controller is not a navigation controller.");
         return;
     }
     
    
-    if (_menuFlags.showingRightView) {
+    if (_menuFlags.showingRightView)
+    {
         
         // if we're showing the right it works a bit different, we'll make a screen shot of the menu overlay, then push, and move everything over
         __block CALayer *layer = [CALayer layer];
@@ -701,11 +831,14 @@
         
         [UIView animateWithDuration:0.25f animations:^{
             
-            if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+            {
                 
                   self.view.transform = CGAffineTransformConcat(currentTransform, CGAffineTransformMakeTranslation(0, -[[UIScreen mainScreen] applicationFrame].size.height));
                 
-            } else {
+            }
+            else
+            {
                 
                   self.view.transform = CGAffineTransformConcat(currentTransform, CGAffineTransformMakeTranslation(-[[UIScreen mainScreen] applicationFrame].size.width, 0));
             }
@@ -719,7 +852,9 @@
             
         }];
         
-    } else {
+    }
+    else
+    {
         
         [navController pushViewController:viewController animated:animated];
         
@@ -730,20 +865,23 @@
 
 #pragma mark - Actions 
 
-- (void)showLeft:(id)sender {
+- (void)showLeft:(id)sender
+{
     
     [self showLeftController:YES];
     
 }
 
-- (void)showRight:(id)sender {
+- (void)showRight:(id)sender
+{
     
     [self showRightController:YES];
     
 }
 
-//------------------wei.chen--------------------------
-- (void)setEnableGesture:(BOOL)isEnable {
+//------------------禁用滑动--------------------------
+- (void)setEnableGesture:(BOOL)isEnable
+{
     [self.pan setEnabled:isEnable];
     [self.tap setEnabled:isEnable];
 }
