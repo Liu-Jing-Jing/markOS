@@ -19,7 +19,8 @@
     self.tableView.rowHeight = 70.0;
     self.userImagesData = [NSMutableArray array];
     //判断是否认证
-    if (self.sinaweibo.isAuthValid) {
+    if (self.sinaweibo.isAuthValid)
+    {
         //加载微博列表数据
         NSLog(@"已经认证");
         [self loadWeiboData];
@@ -29,7 +30,8 @@
 
 
 #pragma mark - load Data
-- (void)loadWeiboData {
+- (void)loadWeiboData
+{
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[@"170", @"MarkLewis"]
                                                                      forKeys:@[@"count", @"screen_name"]];
     [self.sinaweibo requestWithURL:@"friendships/friends.json"
@@ -41,12 +43,14 @@
 
 #pragma mark - SinaWeiboRequest delegate
 //网络加载失败
-- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error {
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
     NSLog(@"网络加载失败:%@",error);
 }
 
 //网络加载完成
-- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result {
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
     
     // 获得用户的关注列表
     NSLog(@"网络加载完成");
