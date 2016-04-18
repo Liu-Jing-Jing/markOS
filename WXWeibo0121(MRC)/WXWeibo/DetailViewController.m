@@ -10,9 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CommentTableView.h"
 #import "CommentModel.h"
-@interface DetailViewController ()
+
+@interface DetailViewController ()<UITableViewEvenDelegate>
 {
     UIView *headerView;
+    NSDictionary *commentDic;
 }
 @end
 
@@ -21,6 +23,7 @@
 {
     
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,7 +33,7 @@
     // self.tableView.delegate = self;
     [self initSubview];
     self.tableView.headerView = [self initViewForHeaderInSection];
-    
+    self.tableView.isMore = YES;
     [self loadData];
 }
 
@@ -68,6 +71,7 @@
     [tableHeaderView addSubview:_weiboView];
     tableHeaderView.height += (h+100);
     
+    self.tableView.eventDelegate = self;
     self.tableView.tableHeaderView = tableHeaderView;
     [tableHeaderView release];
     
@@ -78,7 +82,8 @@
     NSString *weiboID = [_weiboModel.weiboId stringValue];
     if(weiboID.length == 0) return;
     
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:weiboID forKey:@"id"];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[weiboID, @"20"] forKeys:@[@"id", @"count"]];
+
     [self.sinaweibo requestWithURL:@"comments/show.json"
                             params:params
                         httpMethod:@"GET"
@@ -90,15 +95,32 @@
 - (void)loadDataFinished:(NSDictionary *)result
 {
     NSArray *array = [result objectForKey:@"comments"];
-    NSMutableArray *comments = [NSMutableArray arrayWithCapacity:array.count];
+    _comments = [NSMutableArray arrayWithCapacity:array.count];
     for (NSDictionary *dic in array)
     {
         CommentModel *commentModel = [[CommentModel alloc] initWithDataDic:dic];
-        [comments addObject:commentModel];
+        [_comments addObject:commentModel];
         [commentModel release];
     }
     
-    self.tableView.data = comments;
+    // bug
+    //commentDic = [NSDictionary dictionaryWithDictionary:result];
+    
+    CommentModel *last = [_comments lastObject];
+    self.lastCommentID = [last.commentID stringValue];
+    // bug
+//    if(array.count>=20)
+//    {
+//        self.tableView.isMore = YES;
+//    }
+//    else
+//    {
+//        self.tableView.isMore = NO;
+//    }
+
+    
+    self.tableView.data = _comments;
+    self.tableView.commentDic = result;
     [self.tableView reloadData];
 }
 
@@ -108,6 +130,9 @@
     UILabel *_countLabel = [[UILabel alloc] init];
     int reposts = [_weiboModel.repostsCount intValue];
     int comments = [_weiboModel.commentsCount intValue];
+    // NSNumber *total = [commentDic objectForKey:@"total_number"];
+    // 数据不准确 bug
+    
     if (reposts>=0 && comments>=0)
     {
         _countLabel.hidden = NO;
@@ -144,8 +169,10 @@
     // tableHeaderView.height += 20;
     
     
-    return headerView;
+    return [headerView autorelease];
 }
+
+
 #pragma mark - TableView Datasource Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -164,11 +191,106 @@
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
+{
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
 */
+
+
+#pragma mark TableView EventDelegate
+// 下拉
+- (void)pullDown:(BaseTableView *)tableView
+{
+    [tableView performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:2];
+}
+
+// 上拉
+- (void)pullUp:(BaseTableView *)tableView
+{
+    
+    [self pullUpData];
+}
+
+// 点击cell
+- (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"CLICK CELL");
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+
+
+ // 上拉加载最新微博
+ - (void)pullUpData
+{
+    if(self.lastCommentID.length == 0)
+    {
+        NSLog(@"Weibo id is null");
+        return;
+    }
+    NSString *weiboID = [_weiboModel.weiboId stringValue];
+    if(weiboID.length == 0) return;
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[weiboID, @"20", self.lastCommentID] forKeys:@[@"id", @"count", @"max_id"]];
+     [self.sinaweibo requestWithURL:@"comments/show.json"
+                             params:params
+                         httpMethod:@"GET"
+                              block:^(id result) {
+                                  [self pullUpFinishData:result];
+                              }];
+ 
+}
+
+/*
+ NSArray *array = [result objectForKey:@"comments"];
+ _comments = [NSMutableArray arrayWithCapacity:array.count];
+ for (NSDictionary *dic in array)
+ {
+ CommentModel *commentModel = [[CommentModel alloc] initWithDataDic:dic];
+ [_comments addObject:commentModel];
+ [commentModel release];
+ }
+*/
+ // 上拉加载完成
+ - (void)pullUpFinishData:(id)result
+{
+    NSArray *array = [result objectForKey:@"comments"];
+    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:array.count];
+    for (NSDictionary *dic in array)
+    {
+        CommentModel *commentModel = [[CommentModel alloc] initWithDataDic:dic];
+        [newArray addObject:commentModel];
+        [commentModel release];
+    }
+ 
+    // 更新last ID
+    if (newArray.count > 0)
+    {
+        CommentModel *last = [newArray lastObject];
+        self.lastCommentID = [last.commentID stringValue];
+        
+        // 去掉重复的微博
+        [newArray removeObjectAtIndex:0];
+    }
+    [_comments addObjectsFromArray:newArray];
+
+
+    if(array.count<20)
+    {
+        self.tableView.isMore = NO;
+    }
+    else
+    {
+        self.tableView.isMore = YES;
+    }
+     // refresh UI
+     self.tableView.data = _comments;
+     [self.tableView reloadData];
+ 
+}
 
 - (void)dealloc
 {

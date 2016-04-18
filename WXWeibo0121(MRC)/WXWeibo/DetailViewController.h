@@ -11,6 +11,7 @@
 @interface DetailViewController : BaseViewController
 {
     WeiboView *_weiboView;
+    NSMutableArray *_comments;
 }
 
 @property (nonatomic, retain) WeiboModel *weiboModel;
@@ -18,4 +19,6 @@
 @property (retain, nonatomic) IBOutlet UIView *userBarView;
 @property (retain, nonatomic) IBOutlet UIImageView *userImageView;
 @property (retain, nonatomic) IBOutlet UILabel *nickLabel;
+@property (nonatomic, retain) NSString *lastCommentID;
+
 @end
