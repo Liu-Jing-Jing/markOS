@@ -7,4 +7,5 @@
 
 @interface ProfileViewController : BaseViewController
 
+@property (retain, nonatomic) IBOutlet UITableView *tableView;
 @end
