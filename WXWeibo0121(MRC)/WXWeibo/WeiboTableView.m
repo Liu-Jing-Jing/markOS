@@ -10,7 +10,8 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
         // Initialization code
         [self setSeparatorInset:UIEdgeInsetsZero];
         if ([self respondsToSelector:@selector(setSeparatorInset:)])
@@ -26,6 +27,14 @@
             [self setLayoutMargins:UIEdgeInsetsZero];
             
         }
+        
+        
+        // 监听这个切换图片浏览模式的Notification
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reloadData)
+                                                     name:kReloadWeiboTableNotification
+                                                   object:nil];
+
     }
     return self;
 }
