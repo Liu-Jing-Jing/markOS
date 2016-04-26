@@ -19,13 +19,13 @@
  */
 @interface CommentModel : WXBaseModel
 
-@property (nonatomic, copy) NSString *created_at;
-@property (nonatomic, retain) NSNumber *commentID;
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, copy) NSString *source;
+@property (nonatomic,   copy) NSString  *created_at;
+@property (nonatomic, retain) NSNumber  *commentID;
+@property (nonatomic,   copy) NSString  *text;
+@property (nonatomic,   copy) NSString  *source;
 @property (nonatomic, retain) UserModel *user;
-@property (nonatomic, copy) NSString *mid;
-@property (nonatomic, strong) NSString *idstr;
-@property (nonatomic, strong) WeiboModel *weibo;
+@property (nonatomic,   copy) NSString  *mid;
+@property (nonatomic, strong) NSString  *idstr;
+@property (nonatomic, strong) WeiboModel*weibo;
 
 @end

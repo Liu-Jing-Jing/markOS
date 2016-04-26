@@ -10,6 +10,7 @@
 
 - (void)pullDown:(BaseTableView *)tableView;
 - (void)pullUp:(BaseTableView *)tableView;
+@optional
 - (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
