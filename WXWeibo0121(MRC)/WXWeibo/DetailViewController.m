@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CommentTableView.h"
 #import "CommentModel.h"
+#import "MKImageView.h"
+#import "UserViewController.h"
 
 @interface DetailViewController ()<UITableViewEvenDelegate>
 {
@@ -32,6 +34,15 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(-55.0f, 0.0f, 0.0f, 0.0f)];
     // self.tableView.delegate = self;
     [self initSubview];
+    
+    // self.userBarView.userInteractionEnabled = YES;
+    // Tap
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(setBlockForMKImageView:)];
+    [self.userBarView addGestureRecognizer:tapGesture];
+    [tapGesture release];
+    
+    //
     self.tableView.headerView = [self initViewForHeaderInSection];
     self.tableView.isMore = YES;
     [self loadData];
@@ -124,6 +135,22 @@
     [self.tableView reloadData];
 }
 
+
+
+- (void)setBlockForMKImageView:(UITapGestureRecognizer *)tap
+{
+    // 防止循环引用
+    // __block DetailViewController *this = self;
+    // _userImageView.touchBlock = ^{
+        NSString *nickName = self.weiboModel.user.screen_name;
+        
+        UserViewController *userVC = [[UserViewController alloc] init];
+        userVC.userName = nickName;
+        [self.navigationController pushViewController:userVC animated:YES];
+        [userVC release];
+        //};
+    
+}
 
 - (UIView *)initViewForHeaderInSection
 {
