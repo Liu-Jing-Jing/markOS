@@ -11,6 +11,18 @@
 
 @implementation LeftViewController
 
+//#pragma mark - Action
+//- (void)cancelAction:(UIButton *)sender
+//{
+//    [self.appDelegate.menuCtrl dismissViewControllerAnimated:YES completion:NULL];
+//}
+//
+//- (void)sendAction:(UIButton *)sender
+//{
+//    [self.appDelegate.menuCtrl dismissViewControllerAnimated:YES completion:NULL];
+//}
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,6 +37,9 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
+    
+    //
+
 }
 
 - (void)didReceiveMemoryWarning
