@@ -13,7 +13,7 @@
 #import "MainViewController.h"
 #import "DetailViewController.h"
 
-@interface HomeViewController ()<RTLabelDelegate>
+@interface HomeViewController ()
 @property (nonatomic, retain) NSArray *weiboData;
 @end
 
@@ -423,13 +423,7 @@
 {
     [self pullUpData];
 }
-- (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    DetailViewController *detail = [[DetailViewController alloc] init];
-    detail.weiboModel = _weibos[indexPath.row];
-    [self.navigationController pushViewController:detail animated:YES];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
+
 
 - (void)LinkdidSelectWithURLString:(NSURL *)url
 {
@@ -438,7 +432,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-
+/*
 - (void)rtLabel:(id)rtLabel didSelectLinkWithURL:(NSURL *)url
 {
     NSString *absoluteString = [url absoluteString];
@@ -467,5 +461,10 @@
     }
     
 }
+ */
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.tableView becomeFirstResponder];
+}
 @end
