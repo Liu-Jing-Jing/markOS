@@ -51,7 +51,7 @@
     }
     else if ([gender isEqualToString:@"m"])
     {
-        sexName = @"Boy";
+        sexName = @"Man";
     }
     
     // 地址
@@ -59,20 +59,31 @@
     if(address == nil) address = @"";
     self.addressLabel.text = [NSString stringWithFormat:@"%@  %@", sexName, address];
     
-    // desc
+    // desc bug,没有返回数据
     NSString *userDesc = self.userModel.description;
     self.infoLabel.text = (userDesc==nil)? @"" : userDesc;
     
     // 微博数
-    self.countLabel.text = [NSString stringWithFormat:@"Weibos Count: %@", self.userModel.statuses_count];
+    self.countLabel.text = [NSString stringWithFormat:@"Weibos Count: %ld", self.weibosCount];
     
     // 关注数目
-    self.attButton.title = [self.userModel.friends_count stringValue];
-    self.attButton.subtitle = @"Following";
+    [self.attButton setTitle:[NSString stringWithFormat:@"%ld", self.followingCount]];
+    [self.attButton setSubtitle:@"Following"];
     
     // Fans
-    self.fansButton.title = [self.userModel.followers_count stringValue];
-    self.fansButton.subtitle = @"Follower";
+    long fansCount = self.fansCount;    // [self.userModel.followers_count longValue];
+    if(fansCount>=1000)
+    {
+        fansCount = fansCount/1000;
+        // NSLog(@"%ld k", fansCount);
+        [self.fansButton setTitle:[NSString stringWithFormat:@"%ldK", fansCount]];
+    }
+    else
+    {
+        NSLog(@"%ld", fansCount);
+        [self.fansButton setTitle:[NSString stringWithFormat:@"%ld", fansCount]];
+    }
+    [self.fansButton setSubtitle:@"Follower"];
     
 }
 
