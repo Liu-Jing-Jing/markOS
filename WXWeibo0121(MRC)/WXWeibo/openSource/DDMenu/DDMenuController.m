@@ -642,7 +642,9 @@
     [self.view insertSubview:view atIndex:0];
     
     frame = _root.view.frame;
-    frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
+    frame.origin.x = -(frame.size.width - 220);
+    //原代码右侧的宽带太多
+//    frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
     
     BOOL _enabled = [UIView areAnimationsEnabled];
     if (!animated)
@@ -886,4 +888,11 @@
     [self.tap setEnabled:isEnable];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self showRootController:YES];
+    
+}
 @end
