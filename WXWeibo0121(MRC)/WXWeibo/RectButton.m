@@ -27,29 +27,27 @@
 
 - (void)initView
 {
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 22)];
-    _titleLabel.font = [UIFont boldSystemFontOfSize:15];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 69, 22)];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:16];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    _subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 22)];
+    _subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 33, 69, 22)];
     _subtitleLabel.textAlignment = NSTextAlignmentCenter;
+    _subtitleLabel.textColor = [UIColor grayColor];
     _subtitleLabel.font = [UIFont systemFontOfSize:12];
+    
+    [self addSubview:_titleLabel];
+    [self addSubview:_subtitleLabel];
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
     _titleLabel.text = self.title;
-    [_titleLabel sizeToFit];
-    _titleLabel.center = self.center;
-    _titleLabel.top = 6;
+    // [_titleLabel sizeToFit];
     
     _subtitleLabel.text = self.subtitle;
-    [_subtitleLabel sizeToFit];
-    _subtitleLabel.center = self.center;
-    _subtitleLabel.top = _titleLabel.bottom+3;
-    
+    // [_subtitleLabel sizeToFit];
 }
 
 - (void)setTitle:(NSString *)newTitle
@@ -59,7 +57,6 @@
         [_title release];
         _title = [newTitle retain];
         _titleLabel.text = _title;
-        [self setNeedsLayout];
     }
 }
 
@@ -70,7 +67,7 @@
         [_subtitle release];
         _subtitle  =[newSubtitle retain];
         _subtitleLabel.text = _subtitle;
-        [self setNeedsLayout];
+        // [self setNeedsDisplay];
     }
 }
 /*
