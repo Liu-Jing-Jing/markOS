@@ -7,4 +7,5 @@
 
 @interface RightViewController : BaseViewController
 
+- (IBAction)sendAction:(id)sender;
 @end
