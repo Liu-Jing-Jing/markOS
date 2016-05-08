@@ -3,13 +3,21 @@
 //  WXWeibo
 
 #import "ProfileViewController.h"
+#import "ProfileInfoView.h"
+#import "UserDataCountModel.h"
+#import "UserModel.h"
 
 @interface ProfileViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 {
     NSArray *_data;
     NSArray *_detailDescs;
     int mode;
+
+    
+    //
+    ProfileInfoView *_userInfo;
 }
+
 @end
 
 @implementation ProfileViewController
@@ -121,6 +129,7 @@
         
     }
 }
+
 #pragma mark- Controller Lifecycle
 - (void)viewDidLoad
 {
@@ -130,7 +139,79 @@
     // mode = [[NSUserDefaults standardUserDefaults] integerForKey:kBrowserMode];
     // if(mode!=1 || mode!=2) mode = kLargeBrowserMode; // 默认为小图浏览模式
     
+    _userInfo = [[ProfileInfoView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+    // self.tableView.tableHeaderView = _userInfo;
+    // 等有数据了才能显示这个头视图
+    
+    // 在Navigation Bar上加上一个快速返回首页的按钮
+    
+    // self.tableView.eventDelegate = self;
+    self.tableView.hidden = YES;
+    // load data
+    [self loadUserData];
+    // 显示加载提示
+    [super showHUBLoadingTitle:@"Loading..." withDim:YES];
+    
 }
+
+#pragma mark - Data
+#pragma mark - Data
+- (void)loadUserData
+{
+
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"MarkLewis" forKey:@"screen_name"];
+    SinaWeiboRequest *request;
+    request = [self.sinaweibo requestWithURL:@"users/show.json"
+                                      params:params
+                                  httpMethod:@"GET"
+                                       block:^(id result) {
+                                           [self loadUserDataFinished:result];
+                                       }];
+
+}
+
+
+- (void)loadUserDataFinished:(NSDictionary *)result
+{
+    // NSLog(@"%@", result);
+    // 数据错误，粉丝和关注人数都为0
+    
+    UserModel *userModel = [[UserModel alloc] initWithDataDic:result];
+    _userInfo.userModel = userModel;
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:userModel.idstr forKey:@"uids"];
+    
+    SinaWeiboRequest *request2;
+    request2 = [self.sinaweibo requestWithURL:@"users/counts.json"
+                                       params:params
+                                   httpMethod:@"GET"
+                                        block:^(id result) {
+                                            [self loadCountDataFinished:result];
+                                        }];
+}
+
+- (void)loadCountDataFinished:(NSArray *)result
+{
+    UserDataCountModel *countModel = [[UserDataCountModel alloc] initWithDataDic:[result firstObject]];
+    _userInfo.fansCount         = [countModel.followers_count longValue];
+    _userInfo.followingCount    = [countModel.friends_count longValue];
+    _userInfo.weibosCount       = [countModel.statuses_count longValue];
+    [self refreshUI];
+}
+
+
+#pragma mark - UI
+- (void)refreshUI
+{
+    // 完成加载
+    [super hideHUBLoading];
+    self.tableView.hidden = NO;
+    // 加载下来完整数据再显示头部视图
+    self.tableView.tableHeaderView = _userInfo;
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {
