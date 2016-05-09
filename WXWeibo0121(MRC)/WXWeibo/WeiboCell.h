@@ -7,9 +7,11 @@
 
 @class WeiboModel;
 @class WeiboView;
+@class MKImageView;
+
 @interface WeiboCell : UITableViewCell
 {
-    UIImageView     *_userImage;    //用户头像视图
+    MKImageView     *_userImage;    //用户头像视图
     UILabel         *_nickLabel;    //昵称
     UILabel         *_repostCountLabel; //转发数
     UILabel         *_commentLabel;     //回复数

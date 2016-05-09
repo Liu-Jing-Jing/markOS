@@ -10,6 +10,11 @@
 #import "UIImageView+WebCache.h"
 #import "RegexKitLite.h"
 #import "UIUtils.h"
+#import "UserViewController.h"
+#import "MKImageView.h"
+#import "UserViewController.h"
+
+
 @interface WeiboCell ()
 
 @end
@@ -25,9 +30,10 @@
 }
 
 //初始化子视图
-- (void)_initView {
+- (void)_initView
+{
     //用户头像
-    _userImage = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _userImage = [[MKImageView alloc] initWithFrame:CGRectZero];
     _userImage.backgroundColor = [UIColor clearColor];
     _userImage.layer.cornerRadius = 5;  //圆弧半径
     _userImage.layer.borderWidth = .5;
@@ -174,4 +180,46 @@
     
     return nil;
 }
+
+- (void)setWeiboModel:(WeiboModel *)newWeiboModel
+{
+    if (_weiboModel != newWeiboModel)
+    {
+        [_weiboModel release];
+        _weiboModel = [newWeiboModel retain];
+    }
+    
+    // 防止循环引用
+    __block WeiboCell *this = self;
+    _userImage.touchBlock = ^{
+        NSString *nickName = this.weiboModel.user.screen_name;
+        
+        UserViewController *userVC = [[UserViewController alloc] init];
+        userVC.userName = nickName;
+        [this.viewController.navigationController pushViewController:userVC animated:YES];
+        [userVC release];
+    };
+
+}
+
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    UITouch *touch = [touches anyObject];
+//    
+//    CGPoint touchPoint = [touch locationInView:self.contentView];
+//    if (CGRectContainsPoint(_userImage.frame, touchPoint) ||
+//        CGRectContainsPoint(_nickLabel.frame, touchPoint)
+//        )
+//    {
+//        NSLog(@"点击了用户头像或者用户昵称");
+//        UserModel *selectedUser = _weiboModel.user;
+//        UserViewController *userInfoVC = [[UserViewController alloc] init];
+//        userInfoVC.userName = selectedUser.screen_name; // 应该传给userName
+//        [[self viewController].navigationController pushViewController:userInfoVC animated:YES];
+//    }
+//    else
+//    {
+//        [self.nextResponder.nextResponder touchesBegan:touches withEvent:event];
+//    }
+//}
 @end
