@@ -8,6 +8,5 @@
 @interface UserViewController : BaseViewController
 
 @property (retain, nonatomic) IBOutlet WeiboTableView *tableView;
-@property (retain, nonatomic) UserModel *userModel;
 @property (  copy, nonatomic) NSString *userName;
 @end

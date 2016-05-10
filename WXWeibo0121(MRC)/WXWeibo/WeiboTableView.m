@@ -5,6 +5,9 @@
 #import "WeiboTableView.h"
 #import "WeiboCell.h"
 #import "WeiboView.h"
+#import "DetailViewController.h"
+#import "UIFactory.h"
+
 @implementation WeiboTableView
 
 - (id)initWithFrame:(CGRect)frame
@@ -41,11 +44,13 @@
 
 
 #pragma mark - TableViewDataSource Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return self.data.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *identify = @"WeiboCell";
     WeiboCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
     if (cell == nil) {
@@ -59,7 +64,8 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     WeiboModel *weibo = self.data[indexPath.row];
     float height = [WeiboView getWeiboViewHeight:weibo isRepost:NO isDetail:NO];
     
@@ -68,6 +74,14 @@
     return height;
 }
 
+// push DetailView
+- (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DetailViewController *detail = [[DetailViewController alloc] init];
+    detail.weiboModel = self.data[indexPath.row];
+    [self.viewController.navigationController pushViewController:detail animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
 /*
