@@ -14,19 +14,18 @@
 
 @class WeiboModel;
 @class ThemeImageView;
-@protocol WeiboViewDelegate;
 
 @interface WeiboView : UIView<RTLabelDelegate>
 {
 @public
     UIImageView     *_image;                //微博图片
-    ThemeImageView     *_repostBackgroudView;  //转发额微博视图背景
+    ThemeImageView  *_repostBackgroudView;  //转发额微博视图背景
     WeiboView       *_repostView;           //转发的微博视图
     NSString        *_parserString;         // 解析后的字符串
 }
 @property (nonatomic, retain) RTLabel *textLabel;            //微博内容
 
-@property (nonatomic, strong) id<WeiboViewDelegate> delegate;
+// @property (nonatomic, strong) id<WeiboViewDelegate> delegate;
 //微博模型对象
 @property(nonatomic,retain)WeiboModel *weiboModel;
 //当前的微博视图，是否是转发的
@@ -45,7 +44,9 @@
 
 @end
 
+/*
 @protocol WeiboViewDelegate <NSObject>
 
 - (void)WeiboView:(WeiboView *)weiboView linkDidSelectedWithURLString:(NSString *)str;
 @end
+ */

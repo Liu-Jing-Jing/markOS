@@ -10,6 +10,7 @@
 #import "RegexKitLite.h"
 #import "HomeViewController.h"
 #import "UserViewController.h"
+#import "WebViewController.h"
 
 #define LIST_FONT   14.0f           //列表中文本字体
 #define LIST_REPOST_FONT  13.0f;    //列表中转发的文本字体
@@ -380,7 +381,7 @@
         
         
         UserViewController *userInfoVC = [[UserViewController alloc] init];
-        userInfoVC.userModel = _weiboModel.user; // 应该传给userName
+        userInfoVC.userName = [linkString substringFromIndex:1]; // 应该传给userName
         [self.viewController.navigationController pushViewController:userInfoVC animated:YES];
         
         ///[self performSelector:@selector(pushVC:) withObject:vc afterDelay:1.5];
@@ -396,9 +397,13 @@
     else if ([absoluteString hasPrefix:@"http"])
     {
         // 网页超链接
-        NSLog(@"网页：%@", [absoluteString URLDecodedString]);
-        
+        //NSLog(@"网页：%@", [absoluteString URLDecodedString]);
         // [self LinkdidSelectWithURLString:url];
+        
+        WebViewController *webVC = [[WebViewController alloc] initWithURL:[absoluteString URLDecodedString]];
+        [self.viewController.navigationController pushViewController:webVC animated:YES];
+        [webVC release];
+        
     }
 }
 
