@@ -4,6 +4,7 @@
 //
 #import "BaseViewController.h"
 #import "AppDelegate.h"
+#import "UIFactory.h"
 #import "WXHLGlobalUICommon.h"
 @interface BaseViewController ()
 
@@ -18,6 +19,7 @@
     if (self)
     {
         // Custom initialization
+        self.isCancelButton = NO;
     }
     return self;
 }
@@ -26,6 +28,23 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    
+    if (self.isCancelButton)
+    {
+        
+        UIButton *button = [UIFactory creatNavigationButton:CGRectMake(0, 0, 45, 30) title:@"取消" target:self action:@selector(cancelAction)];
+        [button addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
+        // button.titleLabel.textColor = [UIColor colorWithRed:0.132811 green:0.68377 blue:0.102996 alpha:1];
+        UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.leftBarButtonItem = [cancelItem autorelease];
+    }
+
+}
+
+- (void)cancelAction
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 // 内存不足时调用该方法，iOS6.0或者更老的版本都会调用
@@ -82,6 +101,19 @@
     self.hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.hub.dimBackground = isDim;
     self.hub.labelText = title;
+}
+
+-(void)showHUBComplete:(NSString *)title
+{
+    
+    self.hub.customView = [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"37x-Checkmark.png" ]]autorelease];
+    self.hub.mode = MBProgressHUDModeCustomView;
+    
+    if (title.length > 0 ) {
+        
+        self.hub.labelText = title;
+    }
+    [self.hub hide:YES afterDelay:1];
 }
 
 - (void)showHUBLoading
