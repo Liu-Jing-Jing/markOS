@@ -6,5 +6,5 @@
 
 @interface WeiboWebController : UIViewController
 @property (retain, nonatomic) UIWebView *webView;
-@property (copy, nonatomic) NSURL *urlString;
+@property (copy,   nonatomic) NSURL *urlString;
 @end
