@@ -38,7 +38,7 @@
 					<object class="IBUIButton" id="565357187">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{232, 57}, {80, 40}}</string>
+						<string key="NSFrame">{{222, 62}, {90, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="569702742"/>
@@ -52,9 +52,9 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="NSCustomResource" key="IBUINormalImage" id="201886694">
+						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">newbar1.png</string>
+							<string key="NSResourceName">newbar_icon_1.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="235679924">
 							<int key="type">1</int>
@@ -70,7 +70,7 @@
 					<object class="IBUIButton" id="569702742">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{228, 105}, {80, 40}}</string>
+						<string key="NSFrame">{{227, 110}, {80, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="978698637"/>
@@ -81,14 +81,17 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">Take</string>
 						<reference key="IBUINormalTitleShadowColor" ref="89379689"/>
-						<reference key="IBUINormalImage" ref="201886694"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">newbar_icon_2.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="235679924"/>
 						<reference key="IBUIFont" ref="500280099"/>
 					</object>
 					<object class="IBUIButton" id="978698637">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{226, 153}, {80, 40}}</string>
+						<string key="NSFrame">{{222, 158}, {80, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="936078806"/>
@@ -99,14 +102,17 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">Pick</string>
 						<reference key="IBUINormalTitleShadowColor" ref="89379689"/>
-						<reference key="IBUINormalImage" ref="201886694"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">newbar_icon_3.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="235679924"/>
 						<reference key="IBUIFont" ref="500280099"/>
 					</object>
 					<object class="IBUIButton" id="936078806">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{224, 201}, {80, 40}}</string>
+						<string key="NSFrame">{{218, 206}, {90, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="812085861"/>
@@ -117,16 +123,20 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">Pics</string>
 						<reference key="IBUINormalTitleShadowColor" ref="89379689"/>
-						<reference key="IBUINormalImage" ref="201886694"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">newbar_icon_4.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="235679924"/>
 						<reference key="IBUIFont" ref="500280099"/>
 					</object>
 					<object class="IBUIButton" id="812085861">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{228, 249}, {80, 40}}</string>
+						<string key="NSFrame">{{222, 254}, {90, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">104</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -134,7 +144,10 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">Maps</string>
 						<reference key="IBUINormalTitleShadowColor" ref="89379689"/>
-						<reference key="IBUINormalImage" ref="201886694"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">newbar_icon_5.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="235679924"/>
 						<reference key="IBUIFont" ref="500280099"/>
 					</object>
@@ -429,9 +442,12 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">newbar1.png</string>
-			<string key="NS.object.0">{24, 24}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="newbar_icon_1.png">{40, 40}</string>
+			<string key="newbar_icon_2.png">{40, 40}</string>
+			<string key="newbar_icon_3.png">{40, 40}</string>
+			<string key="newbar_icon_4.png">{40, 40}</string>
+			<string key="newbar_icon_5.png">{40, 40}</string>
+		</dictionary>
 	</data>
 </archive>
