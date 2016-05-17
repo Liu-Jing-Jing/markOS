@@ -61,6 +61,8 @@
     
     UIImage *image = [themeManager getThemeImage:_imageName];
     UIImage *highligtImage = [themeManager getThemeImage:_highligtImageName];
+    image = [image stretchableImageWithLeftCapWidth:_leftCapWidth topCapHeight:_topCapHeight];
+    highligtImage = [highligtImage stretchableImageWithLeftCapWidth:_leftCapWidth topCapHeight:_topCapHeight];
     
     [self setImage:image forState:UIControlStateNormal];
     [self setImage:highligtImage forState:UIControlStateHighlighted];
@@ -68,11 +70,29 @@
     
     UIImage *backImage = [themeManager getThemeImage:_backgroundImageName];
     UIImage *backHighligtImage = [themeManager getThemeImage:_backgroundHighligtImageName];
-
+    backImage = [backImage stretchableImageWithLeftCapWidth:_leftCapWidth topCapHeight:_topCapHeight];
+    backHighligtImage = [backHighligtImage stretchableImageWithLeftCapWidth:_leftCapWidth topCapHeight:_topCapHeight];
+    
     [self setBackgroundImage:backImage forState:UIControlStateNormal];
     [self setBackgroundImage:backHighligtImage forState:UIControlStateHighlighted];
     
 }
+
+
+#pragma mark -- setter
+-(void)setLeftCapWidth:(int)leftCapWidth{
+    
+    _leftCapWidth = leftCapWidth;
+    [self loadThemeImage];
+}
+
+-(void)setTopCapHeight:(int)topCapHeight{
+    
+    _topCapHeight = topCapHeight;
+    [self loadThemeImage];
+    
+}
+
 
 #pragma mark - setter  设置图片名后，重新加载该图片名对应的图片
 - (void)setImageName:(NSString *)imageName

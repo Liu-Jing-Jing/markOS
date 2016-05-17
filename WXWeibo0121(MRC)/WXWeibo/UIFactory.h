@@ -27,4 +27,10 @@
                               target:(id)aTarget
                               action:(SEL)action;
 
+//创建导航栏上的按钮
++(UIButton *)creatNavigationButton:(CGRect)frame
+                             title:(NSString *)title
+                            target:(id)target
+                            action:(SEL)action;
+
 @end
