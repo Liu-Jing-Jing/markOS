@@ -17,7 +17,7 @@
     if (self)
     {
         [self initData];
-        // self.pageNumber = items.count;
+        self.pageNumber = items.count;
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
@@ -67,6 +67,7 @@
     // 设置尺寸
     self.width = items.count *320;
     self.height = 4 * item_height;
+    // self.pageNumber = items.count;
     
     //    放大镜
     magnifierView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 64, 92)];
@@ -180,8 +181,8 @@
     
     //    计算选中表情的索引
     int index = colum + row*7;
-    
     NSArray *items2D = [items objectAtIndex:page];
+    if(page==3 && index>items2D.count-1) return; // 最后一页没有28个表情，会因为数组越界导致崩溃
     NSDictionary *item = [items2D objectAtIndex:index];
     
     NSString *faceName = [item objectForKey:@"chs"];
@@ -262,8 +263,6 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
-    
     magnifierView.hidden = NO;
     
     if ([self.superview isKindOfClass:[UIScrollView class]])

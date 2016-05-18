@@ -31,10 +31,14 @@
 {
     
     faceView = [[MKFaceView alloc]initWithFrame:CGRectZero];
+    // faceView.backgroundColor = [UIColor greenColor];
+    faceView.top -= 64;
     
-    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, faceView.height+10)];
+    scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 0)];
     scrollView.backgroundColor = [UIColor clearColor];
     scrollView.contentSize = CGSizeMake(faceView.width, faceView.height);
+    
+    NSLog(@"%f, %f", faceView.width, faceView.height);
     scrollView.pagingEnabled = YES;
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
@@ -46,7 +50,7 @@
     
     pageControl  = [[UIPageControl alloc]initWithFrame:CGRectMake(0, scrollView.bottom, 40, 20)];
     pageControl.backgroundColor = [UIColor clearColor];
-    pageControl.pageIndicatorTintColor = [UIColor redColor];
+    // pageControl.pageIndicatorTintColor = [UIColor redColor];
     pageControl.numberOfPages = faceView.pageNumber;
     pageControl.currentPage = 0;
     
@@ -55,9 +59,9 @@
     [scrollView release];
     
     
-    self.height = scrollView.height + pageControl.height;
-    self.width = scrollView.width;
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"emoticon_keyboard_background.png" ]];
+    self.height = faceView.height + pageControl.height;
+    self.width = faceView.width;
+    // self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"emoticon_keyboard_background.png" ]];
 }
 
 #pragma mark - UIScrollView Delegate
