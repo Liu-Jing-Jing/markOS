@@ -8,13 +8,16 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendViewController">
             <connections>
                 <outlet property="editorToolbar" destination="wFH-RE-EEE" id="QHm-Br-FOe"/>
+                <outlet property="placeBackgrougView" destination="xoK-cD-bRe" id="8bb-Fr-JHx"/>
+                <outlet property="placeLabel" destination="6eN-Iw-PTf" id="cur-2R-pCT"/>
+                <outlet property="placeView" destination="eYw-RC-x9f" id="y2J-it-sto"/>
                 <outlet property="textVIew" destination="awC-2l-YKn" id="wSt-wX-oGR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+            <rect key="frame" x="0.0" y="64" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Send" translatesAutoresizingMaskIntoConstraints="NO" id="awC-2l-YKn">
@@ -24,15 +27,35 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wFH-RE-EEE">
-                    <rect key="frame" x="0.0" y="300" width="320" height="40"/>
+                    <rect key="frame" x="0.0" y="300" width="320" height="68"/>
+                    <subviews>
+                        <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eYw-RC-x9f">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="compose_placebutton_background.png" translatesAutoresizingMaskIntoConstraints="NO" id="xoK-cD-bRe">
+                                    <rect key="frame" x="8" y="0.0" width="250" height="23"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eN-Iw-PTf">
+                                    <rect key="frame" x="45" y="1" width="200" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <point key="canvasLocation" x="139" y="154"/>
         </view>
     </objects>
+    <resources>
+        <image name="compose_placebutton_background.png" width="48" height="23"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
