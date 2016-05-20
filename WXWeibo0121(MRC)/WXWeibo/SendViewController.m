@@ -5,11 +5,13 @@
 #import "UIFactory.h"
 #import "BaseNavigationController.h"
 #import "NearbyViewController.h"
-@interface SendViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate>
+@interface SendViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UITextViewDelegate>
 {
     UIImageView *_fullImageView;
+    UIView *_faceView; // 表情视图
+    UIPageControl *pageControl;
+    // CGAffineTransform _originTransform;
 }
-@property (retain, nonatomic) NSMutableArray *buttons;
 
 @end
 
@@ -151,14 +153,14 @@
     NSString *text = self.textVIew.text;
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
     
-    if (self.longitude.length>0 || self.latitude.length>0)
+    if (self.longitude.length>0 && self.latitude.length>0)
     {
         [params setObject:self.longitude forKey:@"long"];
         [params setObject:self.latitude forKey:@"lat"];
     }
 
-    [params setObject:@"114.4" forKey:@"long"];
-    [params setObject:@"30.5" forKey:@"lat"];
+    // [params setObject:@"114.4" forKey:@"long"];
+    // [params setObject:@"30.5" forKey:@"lat"];
     
     if(self.sendImage == nil)
     {
@@ -209,18 +211,18 @@
     NSArray *imageNames = @[@"compose_locatebutton_background.png",
                            @"compose_camerabutton_background.png",
                            @"compose_trendbutton_background.png",
+                           @"compose_mentionbutton_background.png",
                            @"compose_emoticonbutton_background.png",
-                           @"compose_keyboardbutton_background.png"
+                           @"compose_keyboardbutton_background.png",
                            ];
-    
     NSArray *imageHighlighedName = @[@"compose_locatebutton_background_highlighted.png",
                                      @"compose_camerabutton_background_highlighted.png",
-                                     @"compose_trendbutton_background_highlighted 3.png",
-                                     @"compose_emoticonbutton_background_highlighted 2.png",
-                                     @"compose_keyboardbutton_background_highlighted 3.png"
+                                     @"compose_trendbutton_background_highlighted.png",
+                                     @"compose_mentionbutton_background_highlighted.png",
+                                     @"compose_emoticonbutton_background_highlighted.png",
+                                     @"compose_keyboardbutton_background_highlighted.png"
                                      ];
-    
-    
+
     
     for(int i = 0; i < imageNames.count; i++)
     {
@@ -277,14 +279,14 @@
         
         NSString *address = [result objectForKey:@"address"];
         
-        if ([address isKindOfClass:[NSNull class]] || address.length == 0) {
-            
+        if ([address isKindOfClass:[NSNull class]] || address.length == 0)
+        {
             address = [result objectForKey:@"title"];
         }
         
         self.placeView.hidden = NO;
         self.placeLabel.text = address;
-        UIButton *locationButton =  [_buttons objectAtIndex:0];
+        UIButton *locationButton = _buttons[0];
         locationButton.hidden = YES;
         // locationButton.selected = YES;
     };
@@ -308,6 +310,148 @@
 }
 
 
+- (UIView *)loadFaceKeyboardViewWithBlock:(SelectBlock)block
+{
+    UIView *wrapView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, 320, 300)];
+    UIImage *backImage = [UIImage imageNamed:@"emoticon_keyboard_background.png"];
+    wrapView.backgroundColor = [UIColor colorWithPatternImage:backImage];
+    MKFaceView *faceView = [[MKFaceView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    // faceView.backgroundColor = [UIColor greenColor];
+    // faceView.top -= 64;
+    faceView.block = block;
+    
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 300)];
+    // scrollView.backgroundColor = [UIColor grayColor];
+    scrollView.delegate = self;
+    scrollView.contentSize = faceView.frame.size;
+    scrollView.pagingEnabled = YES;
+    scrollView.clipsToBounds = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    [scrollView addSubview:faceView];
+    
+    
+    
+    
+    pageControl  = [[UIPageControl alloc]initWithFrame:CGRectMake((ScreenWidth-40)/2, 200, 40, 30)];
+    pageControl.backgroundColor = [UIColor clearColor];
+    pageControl.numberOfPages = faceView.pageNumber;
+    pageControl.currentPage = 0;
+    pageControl.tag = 2011;
+    
+    [wrapView addSubview:pageControl];
+    [wrapView addSubview:scrollView];
+    
+    [pageControl release];
+    [scrollView release];
+    return wrapView;
+}
+
+#pragma mark - UIScrollView Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)_scrollView
+{
+    
+    int pageNumber = _scrollView.contentOffset.x / 320;
+    pageControl.currentPage = pageNumber;
+    
+    
+}
+
+
+// 显示表情面板
+- (void)showFaceView
+{
+    [self.textVIew resignFirstResponder];
+
+    
+    if (_faceView == nil)
+    {
+        __block SendViewController *this = self;
+        _faceView = [self loadFaceKeyboardViewWithBlock:^(NSString *faceName) {
+            NSString *text = this.textVIew.text;
+            // 把表情符号追加到text后面
+            NSString *appendText = [text stringByAppendingString:faceName];
+            this.textVIew.text = appendText;
+        }];
+        _faceView.top = ScreenHeight;
+        [self.view addSubview:_faceView];
+        
+        
+//        __block SendViewController *this = self;
+//        _faceView = [[WXFaceScrollView alloc]initWithSelectBlock:^(NSString *faceName){
+//            
+//            NSString *text = this.textView.text;
+//            //            把表情符号追加到text后面
+//            NSString *appendText = [text stringByAppendingString:faceName];
+//            this.textView.text = appendText;
+//        }];
+        
+        
+        // _faceView.top = ScreenHeight-20-44- _faceView.height;
+        
+        // 利用transform属性来改变faceView的纵坐标，使它位于屏幕的底部
+        // _faceView.transform = CGAffineTransformTranslate(_faceView.transform, 0, ScreenHeight-44-20);
+        _faceView.top = ScreenHeight;
+        [self.view addSubview:_faceView];
+    }
+    
+    UIButton *faceButton = _buttons[4];
+    UIButton *keyboard = _buttons[5];
+    
+    faceButton.alpha = 1;
+    keyboard.alpha = 0;
+    keyboard.hidden = NO;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        // _originTransform = _faceView.transform;
+        // _faceView.transform = CGAffineTransformIdentity;
+        // faceView的y坐标改为ScreenHeight－自己的高度
+        _faceView.top = ScreenHeight-240;
+        faceButton.alpha = 0;
+        
+        // 调整textView／editorbar的y坐标，解决了切换中英文输入法editorBar空白一块的问题
+        // float height = _faceView.height;
+        self.editorToolbar.bottom = ScreenHeight-240;
+        self.textVIew.height = self.editorToolbar.top;
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.3  animations:^{
+            
+            keyboard.alpha = 1;
+            
+        }];
+        
+    }];
+}
+
+
+-(void)showKeyboardWithDelegate:(BOOL)isDelegate
+{
+    if(isDelegate == NO) [self.textVIew becomeFirstResponder];
+    
+    UIButton *faceButton = _buttons[4];
+    UIButton *keyboard = _buttons[5];
+    
+    keyboard.alpha= 1;
+    faceButton.alpha = 0;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        // CGAffineTransformTranslate(_faceView.transform, 0, ScreenHeight - 64 -20);
+        // 复位到键盘的底部
+        // _faceView.transform = _originTransform;
+        _faceView.top = ScreenHeight;
+        keyboard.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        faceButton.alpha = 1;
+    }];
+}
+
+
 #pragma mark editorBar Action
 - (void)buttonAction:(UIButton *)sender
 {
@@ -318,17 +462,22 @@
             [self location];
             break;
         case 11:
-            // 拍照
+            // 点击了拍照按钮
             [self selectImage];
             break;
         case 12:
-            //
+            // 点击了添加话题按钮
             break;
         case 13:
-            //
+            // 点击了AT用户按钮
             break;
         case 14:
-            //
+            // 点击了显示表情按钮
+            [self showFaceView];
+            break;
+        case 15:
+            // 点击了显示键盘按钮
+            [self showKeyboardWithDelegate:NO];
             break;
             
         default:
@@ -450,8 +599,21 @@
     CGRect keyboardFrame = [userInfoValue CGRectValue];
     CGFloat h = keyboardFrame.size.height;
     
-    self.editorToolbar.bottom = ScreenHeight - (h); // 20+44
-    self.textVIew.height = self.editorToolbar.top;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.editorToolbar.bottom = ScreenHeight - (h); // 20+44
+        self.textVIew.height = self.editorToolbar.top;
+    }];
+    
+    
+}
+
+#pragma mark -- UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    // 显示键盘
+    [self showKeyboardWithDelegate:YES];
+    // [self.textVIew becomeFirstResponder];
+    return YES;
     
 }
 
@@ -494,6 +656,7 @@
 
 - (void)dealloc
 {
+    [_faceView release];
     [_textVIew release];
     [_editorToolbar release];
     [_placeBackgrougView release];

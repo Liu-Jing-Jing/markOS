@@ -2,15 +2,16 @@
 //  WXWeibo
 
 #import "BaseViewController.h"
-
-@interface SendViewController : BaseViewController
-
+#import "MKFaceView.h"
+@interface SendViewController : BaseViewController<UIScrollViewDelegate>
 
 // send data
 @property (nonatomic,copy) NSString *longitude;
 @property (nonatomic,copy) NSString *latitude;
 @property (nonatomic,copy)UIImage *sendImage;
 @property (nonatomic,retain)UIButton *sendImageButton;
+@property (retain, nonatomic) NSMutableArray *buttons;
+
 
 @property (retain, nonatomic) IBOutlet UITextView *textVIew;
 @property (retain, nonatomic) IBOutlet UIView *editorToolbar;
