@@ -6,8 +6,10 @@
 #import "MKFaceView.h"
 #import "MKFaceScrollView.h"
 
-@interface DiscoverViewController ()
-
+@interface DiscoverViewController ()<UIScrollViewDelegate>
+{
+    UIPageControl *pageControl;
+}
 @end
 
 @implementation DiscoverViewController
@@ -18,13 +20,64 @@
     if (self)
     {
         self.title = @"Discover";
-        MKFaceScrollView *faceView = [[MKFaceScrollView alloc] initWithFrame:CGRectMake(0, 64, 0, 0)];
-        faceView.bottom = ScreenHeight-59;
-        [self.view addSubview:faceView];
+        // MKFaceScrollView *faceView = [[MKFaceScrollView alloc] initWithFrame:CGRectMake(0, 100, 0, 0)];
+        // [self.view addSubview:faceView];
 
+        UIView *faceWrapView = [self loadFaceKeyboardView];
+        faceWrapView.bottom = ScreenHeight;
+        [self.view addSubview:faceWrapView];
     }
     return self;
 }
+
+- (UIView *)loadFaceKeyboardView
+{
+    UIView *wrapView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, 320, 300)];
+    UIImage *backImage = [UIImage imageNamed:@"emoticon_keyboard_background.png"];
+    wrapView.backgroundColor = [UIColor colorWithPatternImage:backImage];
+    MKFaceView *faceView = [[MKFaceView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    // faceView.backgroundColor = [UIColor greenColor];
+    // faceView.top -= 64;
+    
+    
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 300)];
+    // scrollView.backgroundColor = [UIColor grayColor];
+    scrollView.delegate = self;
+    scrollView.contentSize = faceView.frame.size;
+    scrollView.pagingEnabled = YES;
+    scrollView.clipsToBounds = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    [scrollView addSubview:faceView];
+    
+    
+    
+    
+    pageControl  = [[UIPageControl alloc]initWithFrame:CGRectMake((ScreenWidth-40)/2, 200, 40, 30)];
+    pageControl.backgroundColor = [UIColor clearColor];
+    pageControl.numberOfPages = faceView.pageNumber;
+    pageControl.currentPage = 0;
+    pageControl.tag = 2011;
+    
+    [wrapView addSubview:pageControl];
+    [wrapView addSubview:scrollView];
+
+    [pageControl release];
+    [scrollView release];
+    return wrapView;
+}
+
+
+#pragma mark - UIScrollView Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)_scrollView
+{
+    
+    int pageNumber = _scrollView.contentOffset.x / 320;
+    pageControl.currentPage = pageNumber;
+    
+    
+}
+
 
 void faceViewTest()
 {
