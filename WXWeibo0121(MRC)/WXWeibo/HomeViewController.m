@@ -390,7 +390,7 @@
     
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])
     {
-        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
+        // [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
     }
 }
 
@@ -403,7 +403,7 @@
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)])
     {
-        [cell setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
+        // [cell setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
     }
 }
 
