@@ -5,6 +5,8 @@
 #import "DiscoverViewController.h"
 #import "MKFaceView.h"
 #import "MKFaceScrollView.h"
+#import "NearWeiboMapViewController.h"
+
 
 @interface DiscoverViewController ()<UIScrollViewDelegate>
 {
@@ -99,6 +101,18 @@ void faceViewTest()
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    for (int i = 100; i<=101; i++)
+    {
+        UIButton *button = (UIButton *)[self.view viewWithTag:i];
+        button.layer.shadowColor = [UIColor blackColor].CGColor;
+        button.layer.shadowOffset = CGSizeMake(3, 3);
+        button.layer.shadowOpacity = 1;
+        button.layer.shadowRadius = 3;
+        
+        button.showsTouchWhenHighlighted = YES;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,4 +121,21 @@ void faceViewTest()
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [_nearWeiboButton release];
+    [_nearUserButton release];
+    [super dealloc];
+}
+
+
+- (IBAction)nearWeiboAction:(id)sender
+{
+    NearWeiboMapViewController *nearWeiboMapVC = [[NearWeiboMapViewController alloc] init];
+    // 传递数据
+    
+    [self.navigationController pushViewController:nearWeiboMapVC animated:YES];
+    [nearWeiboMapVC release];
+    
+}
 @end
