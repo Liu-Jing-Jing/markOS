@@ -30,3 +30,14 @@
 #define kLargeBrowserMode 1 // 大图浏览模式
 #define kSmallBrowserMode 2 // 小图浏览模式
 
+
+//---------------URL----------------
+#define URL_POIS @"place/nearby/pois.json"
+#define URL_HOME_TIMELINE @""
+#define URL_COMMENT
+#define URL_UPDATE
+#define URL_UPLOAD
+#define URL_USER_SHOW
+#define URL_TIMELINE
+#define URL_FOLLOWERS       @"friendships/followers.json"//粉丝列表
+#define URL_FRIENDS         @"friendships/friends.json"//关注列表
