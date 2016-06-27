@@ -132,4 +132,11 @@
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     return appDelegate;
 }
+
+- (void)dealloc
+{
+    NSLog(@"%s", __FUNCTION__);
+    
+    [super dealloc];
+}
 @end
