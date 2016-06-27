@@ -3,6 +3,7 @@
 //  WXWeibo
 
 #import <UIKit/UIKit.h>
+#import "FriendshipsViewController.h"
 @class RectButton;
 @class UserModel;
 
@@ -24,4 +25,6 @@
 @property (retain, nonatomic) IBOutlet RectButton *attButton; // 关注的按钮
 @property (retain, nonatomic) IBOutlet RectButton *fansButton;
 
+- (IBAction)fansAction:(id)sender;
+- (IBAction)attAction:(id)sender;
 @end

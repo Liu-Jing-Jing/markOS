@@ -6,6 +6,7 @@
 #import "UserModel.h"
 #import "RectButton.h"
 #import "UIImageView+WebCache.h"
+#import "AttentionListViewController.h"
 
 @implementation UserInfoView
 
@@ -85,15 +86,61 @@
     }
     [self.fansButton setSubtitle:@"Follower"];
     
+
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+
+
+
+
+
+
+- (IBAction)attAction:(id)sender
+{
+    /*
+    FriendshipsViewController *friendCtrl = [[FriendshipsViewController alloc]init];
+    
+    // friendCtrl.userId = self.user.idstr;
+    friendCtrl.shipType = Attention;
+    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    friendCtrl.userId = appDelegate.sinaweibo.userID;
+    
+    // NSLog(@"[LBB]userId = %@",friendCtrl.userId);
+    [self.viewController.navigationController pushViewController:friendCtrl animated:YES];
+    [friendCtrl release];
+     */
+    
+    
+    AttentionListViewController *attListVC = [[AttentionListViewController alloc] init];
+    //AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    // attListVC.screen_name = appDelegate.sinaweibo.userID;
+    
+    [self.viewController.navigationController pushViewController:attListVC animated:YES];
+    [attListVC release];
+    
 }
-*/
+
+- (IBAction)fansAction:(id)sender
+{
+    
+    FriendshipsViewController *friendCtrl = [[FriendshipsViewController alloc]init];
+    
+    // friendCtrl.userId = self.user.idstr;
+    friendCtrl.shipType = Fans;
+    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    friendCtrl.userId = appDelegate.sinaweibo.userID;
+    
+    // NSLog(@"[LBB]userId = %@",friendCtrl.userId);
+    [self.viewController.navigationController pushViewController:friendCtrl animated:YES];
+    [friendCtrl release];
+    
+    /*
+    AttentionListViewController *attListVC = [[AttentionListViewController alloc] init];
+    //AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    // attListVC.screen_name = appDelegate.sinaweibo.userID;
+     */
+    
+}
 
 - (void)dealloc
 {
