@@ -9,4 +9,5 @@
 
 @property (retain, nonatomic) IBOutlet WeiboTableView *tableView;
 @property (  copy, nonatomic) NSString *userName;
+@property(nonatomic,copy)NSString *userId;
 @end
