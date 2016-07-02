@@ -5,7 +5,10 @@
 #import "MessageViewController.h"
 #import "WeiboModel.h"
 #import "UIImageView+WebCache.h"
-@interface MessageViewController ()<SinaWeiboRequestDelegate>
+#import "MKDateService.h"
+
+
+@interface MessageViewController ()<SinaWeiboRequestDelegate, UITableViewEvenDelegate>
 @property(retain, nonatomic) NSArray *friendsData;
 @property(retain, nonatomic) NSMutableArray *userImagesData;
 @end
@@ -125,6 +128,59 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+
+-(void)loadAtWeiboData
+{
+    
+    [super showHUBLoadingTitle:@"Loading" withDim:YES];
+    
+    [MKDateService requestWithURL:@"statuses/mentions.json" params:nil httpMethod:@"GET" completeBlock:^(id result)
+    {
+        
+        [self loadAtWeiboDataFinish:result];
+        
+    }];
+    
+}
+
+
+-(void)loadAtWeiboDataFinish:(NSDictionary *)result
+{
+
+    NSArray *statues = [result objectForKey:@"statuses"];
+    NSMutableArray *weibos = [NSMutableArray arrayWithCapacity:statues.count];
+    
+    for (NSDictionary *statuesDic in statues)
+    {
+        
+        WeiboModel *weibo = [[WeiboModel alloc]initWithDataDic:statuesDic];
+        [weibos addObject:weibo];
+        [weibo release];
+    }
+    
+    //    刷新UI
+    [super hideHUBLoading];
+    // _weiboTable.hidden = NO;
+    // _weiboTable.data = weibos;
+    // [_weiboTable reloadData];
+    
+}
+
+#pragma mark -- UITableViewEventDelegate
+- (void)pullDown:(BaseTableView *)tableView
+{
+    
+}
+- (void)pullUp:(BaseTableView *)tableView
+{
+    
+}
+
+//- (void)tableView:(BaseTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    
+//}
 
 
 
