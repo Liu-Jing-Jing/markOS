@@ -85,4 +85,11 @@
     [[UIImage imageNamed:@"emoticon_keyboard_background.png"] drawInRect:rect];
 }
 
+- (void)dealloc
+{
+    [faceView release];
+    [pageControl release];
+    [scrollView release];
+    [super dealloc];
+}
 @end

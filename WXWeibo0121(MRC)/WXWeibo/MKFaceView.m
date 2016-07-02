@@ -140,7 +140,7 @@
             }
         }
     }
-
+    
 }
 
 
@@ -274,4 +274,13 @@
     
 }
 
+
+- (void)dealloc
+{
+    NSLog(@"%s", __FUNCTION__);
+    //Block release
+    Block_release(_block);
+    
+    [super dealloc];
+}
 @end
