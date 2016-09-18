@@ -69,7 +69,7 @@
         Block_release(_selectBlock);//因为_selectBlock(dic)只调用一次，所以可以调完释放
         _selectBlock = nil;
     }
-    
+    // 键盘消失了
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

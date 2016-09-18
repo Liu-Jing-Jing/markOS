@@ -153,14 +153,14 @@
     NSString *text = self.textVIew.text;
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
     
-    if (self.longitude.length>0 && self.latitude.length>0)
+    if (self.longitude.length>0 || self.latitude.length>0)
     {
         [params setObject:self.longitude forKey:@"long"];
         [params setObject:self.latitude forKey:@"lat"];
     }
 
-    // [params setObject:@"114.4" forKey:@"long"];
-    // [params setObject:@"30.5" forKey:@"lat"];
+    [params setObject:@"114.4" forKey:@"long"];
+    [params setObject:@"30.5" forKey:@"lat"];
     
     if(self.sendImage == nil)
     {
@@ -260,7 +260,6 @@
 //定位
 -(void)location
 {
-    
     NearbyViewController *nearby = [[NearbyViewController alloc]init];
     BaseNavigationController *nearbyNav = [[BaseNavigationController alloc]initWithRootViewController:nearby];
     [self presentViewController:nearbyNav animated:YES completion:NULL];
@@ -279,18 +278,19 @@
         
         NSString *address = [result objectForKey:@"address"];
         
-        if ([address isKindOfClass:[NSNull class]] || address.length == 0)
-        {
+        if ([address isKindOfClass:[NSNull class]] || address.length == 0) {
+            
             address = [result objectForKey:@"title"];
         }
         
         self.placeView.hidden = NO;
         self.placeLabel.text = address;
-        UIButton *locationButton = _buttons[0];
+        UIButton *locationButton =  [_buttons objectAtIndex:0];
         locationButton.hidden = YES;
         // locationButton.selected = YES;
     };
     
+    // [self becomeFirstResponder];
     [nearby release];
     [nearbyNav release];
 }
@@ -362,7 +362,7 @@
 - (void)showFaceView
 {
     [self.textVIew resignFirstResponder];
-
+    
     
     if (_faceView == nil)
     {
@@ -377,14 +377,14 @@
         [self.view addSubview:_faceView];
         
         
-//        __block SendViewController *this = self;
-//        _faceView = [[WXFaceScrollView alloc]initWithSelectBlock:^(NSString *faceName){
-//            
-//            NSString *text = this.textView.text;
-//            //            把表情符号追加到text后面
-//            NSString *appendText = [text stringByAppendingString:faceName];
-//            this.textView.text = appendText;
-//        }];
+        //        __block SendViewController *this = self;
+        //        _faceView = [[WXFaceScrollView alloc]initWithSelectBlock:^(NSString *faceName){
+        //
+        //            NSString *text = this.textView.text;
+        //            //            把表情符号追加到text后面
+        //            NSString *appendText = [text stringByAppendingString:faceName];
+        //            this.textView.text = appendText;
+        //        }];
         
         
         // _faceView.top = ScreenHeight-20-44- _faceView.height;
@@ -450,6 +450,7 @@
         faceButton.alpha = 1;
     }];
 }
+
 
 
 #pragma mark editorBar Action

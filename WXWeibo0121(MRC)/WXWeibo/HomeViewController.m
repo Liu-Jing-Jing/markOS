@@ -216,7 +216,7 @@
     [self.tableView reloadData];
     
     // 显示更新微博的条数
-    int updataCount = statues.count;
+    int updataCount = (int)statues.count;
     NSLog(@"下拉更新, 获得%d条新微博", updataCount);
     [self showNewWeiboCount:updataCount];
     
@@ -390,7 +390,7 @@
     
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])
     {
-        // [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
     }
 }
 
@@ -403,7 +403,7 @@
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)])
     {
-        // [cell setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
+        [cell setLayoutMargins:UIEdgeInsetsMake(0,6,0,6)];
     }
 }
 
