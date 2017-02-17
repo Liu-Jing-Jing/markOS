@@ -6,23 +6,23 @@
 
 		DB		0xeb, 0x4e, 0x90
 		DB		"HELLOIPL"    ; note
-		DW		512				    ; note
-		DB		1				      ; note
-		DW		1				      ; note
-		DB		2				      ; note
-		DW		224				    ; note
-		DW		2880			    ; note
-		DB		0xf0			    ; note
-		DW		9				      ; note
-		DW		18				    ; note
-		DW		2				      ; note
-		DD		0				      ; note
-		DD		2880			    ; note
-		DB		0,0,0x29		  ; note
-		DD		0xffffffff		; note
-		DB		"HELLO-OS   "	; note
-		DB		"FAT12   "		; note
-		RESB	18				    ; note
+		DW		512	      ; note
+		DB		1	      ; note
+		DW		1	      ; note
+		DB		2	      ; note
+		DW		224	      ; note
+		DW		2880	      ; note
+		DB		0xf0	      ; note
+		DW		9	      ; note
+		DW		18	      ; note
+		DW		2	      ; note
+		DD		0	      ; note
+		DD		2880	      ; note
+		DB		0,0,0x29      ; note
+		DD		0xffffffff    ; note
+		DB		"HELLO-OS   " ; note
+		DB		"FAT12   "    ; note
+		RESB	18		      ; note
 
 ; note
 
