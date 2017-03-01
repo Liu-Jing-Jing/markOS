@@ -33,7 +33,8 @@
 ; 信息显示部分
 		DB		0x0a, 0x0a
 		DB		"hello, world"
-		DB		0x0a			          ; 换行		
+; 换行
+		DB		0x0a		
 		DB		"markOS is running!"
 		DB		0
 
