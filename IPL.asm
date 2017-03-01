@@ -31,7 +31,7 @@
 		DB		0xee, 0xf4, 0xeb, 0xfd
 
 ; 信息显示部分
-		DB		0x0a, 0x0a		      ; note
+		DB		0x0a, 0x0a
 		DB		"hello, world"
 		DB		0x0a			          ; 换行		
 		DB		"markOS is running!"
