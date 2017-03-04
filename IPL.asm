@@ -18,7 +18,7 @@
 		DD		2880	      ; note
 		DB		0,0,0x29      ; note
 		DD		0xffffffff    ; note
-		DB		"HELLO-OS   " ; note
+		DB		"MARK-OS-IPL" ; note
 		DB		"FAT12   "    ; note
 		RESB	18		      ; note
 
