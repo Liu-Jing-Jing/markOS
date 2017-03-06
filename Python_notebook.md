@@ -37,4 +37,13 @@ print语句
 print语句也可以跟上多个字符串，用逗号“,”隔开，就可以连成一串输出：
 > print 'The quick brown fox', 'jumps over', 'the lazy dog'
 The quick brown fox jumps over the lazy dog
-print会依次打印每个字符串，遇到逗号“,”会输出一个空格，因此，输出的字符串是这样拼起来的：
+print会依次打印每个字符串，遇到逗号“,”会输出一个空格，因此，输出的字符串是这样拼起来的
+
+
+Python的注释以 # 开头，后面的文字直到行尾都算注释
+
+#这一行全部都是注释...
+print 'hello' # 这也是注释
+注释还有一个巧妙的用途，就是一些代码我们不想运行，但又不想删除，就可以用注释暂时屏蔽掉：
+#暂时不想运行下面一行代码:
+#print 'hello, python.'
