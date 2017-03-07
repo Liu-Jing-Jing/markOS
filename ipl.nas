@@ -60,7 +60,7 @@ msg:
 		DB		"markOS is running!"
 		DB		0
 
-		RESB	0x7dfe-$			; 利用0x00填充到0x1fe为止		
+		RESB	0x7dfe-$				; 利用0x00填充到0x1fe为止		
 		
 		DB		0x55, 0xaa
 
