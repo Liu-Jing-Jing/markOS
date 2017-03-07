@@ -6,21 +6,21 @@
 		JMP		entry
 		DB		0x90
 		DB		"HELLOIPL"		;
-		DW		512				;
-		DB		1				;
-		DW		1				;
-		DB		2				;
-		DW		224				;
+		DW		512			;
+		DB		1			;
+		DW		1			;
+		DB		2			;
+		DW		224			;
 		DW		2880			;
 		DB		0xf0			;
-		DW		9				;
-		DW		18				;
-		DW		2				;
-		DD		0				;
+		DW		9			;
+		DW		18			;
+		DW		2			;
+		DD		0			;
 		DD		2880			;
 		DB		0,0,0x29		;
 		DD		0xffffffff		;
-		DB		"MARK-OS-IPL"	;
+		DB		"MARK-OS-IPL"		; 磁盘名称(必须11字节)
 		DB		"FAT12   "		;
 		RESB	18				;
 
@@ -47,8 +47,9 @@ putloop:
 		JMP		putloop
 
 fin:
-		HLT						; CPU休眠的指令
-		JMP		fin				;
+		HLT					; CPU休眠的指令
+		JMP		fin			; 无限循环, 所以字符串才能显示在屏幕上		
+		
 
 ; 信息显示部分
 msg:
