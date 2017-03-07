@@ -1,45 +1,71 @@
 ; hello-os
 ; TAB=4
-
+		
+		ORG		0x7c00
 ; 软驱的信息
-		DB		0xeb, 0x4e, 0x90
-		DB		"HELLOIPL"    ; note
-		DW		512	      ; note
-		DB		1	      ; note
-		DW		1	      ; note
-		DB		2	      ; note
-		DW		224	      ; note
-		DW		2880	      ; note
-		DB		0xf0	      ; note
-		DW		9	      ; note
-		DW		18	      ; note
-		DW		2	      ; note
-		DD		0	      ; note
-		DD		2880	      ; note
-		DB		0,0,0x29      ; note
-		DD		0xffffffff    ; note
-		DB		"MARK-OS-IPL" ; note
-		DB		"FAT12   "    ; note
-		RESB	18		      ; note
+		JMP		entry
+		DB		0x90
+		DB		"HELLOIPL"		;
+		DW		512				;
+		DB		1				;
+		DW		1				;
+		DB		2				;
+		DW		224				;
+		DW		2880			;
+		DB		0xf0			;
+		DW		9				;
+		DW		18				;
+		DW		2				;
+		DD		0				;
+		DD		2880			;
+		DB		0,0,0x29		;
+		DD		0xffffffff		;
+		DB		"MARK-OS-IPL"	;
+		DB		"FAT12   "		;
+		RESB	18				;
+
 
 ; note
+entry:
+		MOV		AX,0			; 初始化寄存器
+		MOV		SS,AX
+		MOV		SP,0x7c00
+		MOV		DS,AX
+		MOV		ES,AX
 
-		DB		0xb8, 0x00, 0x00, 0x8e, 0xd0, 0xbc, 0x00, 0x7c
-		DB		0x8e, 0xd8, 0x8e, 0xc0, 0xbe, 0x74, 0x7c, 0x8a
-		DB		0x04, 0x83, 0xc6, 0x01, 0x3c, 0x00, 0x74, 0x09
-		DB		0xb4, 0x0e, 0xbb, 0x0f, 0x00, 0xcd, 0x10, 0xeb
-		DB		0xee, 0xf4, 0xeb, 0xfd
+		MOV		SI,msg
+
+
+putloop:
+		MOV		AL,[SI]
+		ADD		SI,1			;
+		CMP		AL,0
+		JE		fin
+		MOV		AH,0x0e			;
+		MOV		BX,15			;
+		INT		0x10			;
+		JMP		putloop
+
+fin:
+		HLT						; CPU休眠的指令
+		JMP		fin				;
 
 ; 信息显示部分
+msg:
 		DB		0x0a, 0x0a
 		DB		"hello, world"
 ; 换行
-		DB		0x0a		
+		DB		0x0a, 0x0a		
 		DB		"markOS is running!"
 		DB		0
 
-		RESB	0x1fe-$			; 利用0x00填充到0x1fe为止		
+		RESB	0x7dfe-$			; 利用0x00填充到0x1fe为止		
 		
 		DB		0x55, 0xaa
 
 ; 0x55, 0xaa是引导扇区结束的标识
+
+		DB		0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00		
+		RESB	4600		
+		DB		0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00		
+        	RESB	1469432
