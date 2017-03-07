@@ -5,23 +5,23 @@
 ; 软驱的信息
 		JMP		entry
 		DB		0x90
-		DB		"HELLOIPL"		;
-		DW		512			      ;
+		DB		"HELLOIPL"			;
+		DW		512			      	;
 		DB		1			        ;
 		DW		1			        ;
 		DB		2			        ;
-		DW		224			      ;
+		DW		224			      	;
 		DW		2880			    ;
 		DB		0xf0			    ;
 		DW		9			        ;
-		DW		18			      ;
+		DW		18			      	;
 		DW		2			        ;
 		DD		0			        ;
 		DD		2880			    ;
-		DB		0,0,0x29		  ;
-		DD		0xffffffff		;
-		DB		"MARK-OS-IPL"	; 磁盘名称(必须11字节)
-		DB		"FAT12   "		;
+		DB		0,0,0x29		  	;
+		DD		0xffffffff			;
+		DB		"MARK-OS-IPL"		; 磁盘名称(必须11字节)
+		DB		"FAT12   "			;
 		RESB	18				    ;
 
 
@@ -38,17 +38,17 @@ entry:
 
 putloop:
 		MOV		AL,[SI]
-		ADD		SI,1			  ;
+		ADD		SI,1			  	;
 		CMP		AL,0
 		JE		fin
-		MOV		AH,0x0e			;
-		MOV		BX,15			  ;
-		INT		0x10			  ;
+		MOV		AH,0x0e				;
+		MOV		BX,15			  	;
+		INT		0x10			  	;
 		JMP		putloop
 
 fin:
-		HLT					      ; CPU休眠的指令
-		JMP		fin			    ; 无限循环, 所以字符串才能显示在屏幕上		
+		HLT					      	; CPU休眠的指令
+		JMP		fin			    	; 无限循环, 所以字符串才能显示在屏幕上		
 		
 
 ; 信息显示部分
