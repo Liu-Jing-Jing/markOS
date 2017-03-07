@@ -11,23 +11,23 @@
 		DW		1			        ;
 		DB		2			        ;
 		DW		224			      	;
-		DW		2880			    ;
-		DB		0xf0			    ;
+		DW		2880			        ;
+		DB		0xf0			        ;
 		DW		9			        ;
 		DW		18			      	;
 		DW		2			        ;
 		DD		0			        ;
-		DD		2880			    ;
+		DD		2880			        ;
 		DB		0,0,0x29		  	;
 		DD		0xffffffff			;
-		DB		"MARK-OS-IPL"		; 磁盘名称(必须11字节)
+		DB		"MARK-OS-IPL"		        ; 磁盘名称(必须11字节)
 		DB		"FAT12   "			;
-		RESB	18				    ;
+		RESB	18				        ;
 
 
 ; note
 entry:
-		MOV		AX,0			    ; 初始化寄存器
+		MOV		AX,0			        ; 初始化寄存器
 		MOV		SS,AX
 		MOV		SP,0x7c00
 		MOV		DS,AX
