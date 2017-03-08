@@ -32,18 +32,18 @@ entry:
 		MOV		SP,0x7c00
 		MOV		DS,AX
 
-;
+; 加载入内存
 		MOV		AX,0x0820
 		MOV		ES,AX
-		MOV		CH,0				;
-		MOV		DH,0				;
-		MOV		CL,2
-
-		MOV		AH,0x02				;
-		MOV		AL,1				;
+		MOV		CH,0				; 软盘柱面0, 也是第一个柱面		
+		MOV		DH,0				; 软盘的磁头0,正面的磁头		
+		MOV		CL,2				; 软盘的第二个扇区,C0-H0-S2		
+		
+		MOV		AH,0x02				; AH = 0x02代表的意思是读盘		
+		MOV		AL,1				; 只处理1个扇区		
 		MOV		BX,0
-		MOV		DL,0x00				;
-		INT		0x13				;
+		MOV		DL,0x00				; 代表A驱动器号		
+		INT		0x13				; 调用BIOS的第19号与磁盘有关的函数	
 		JC		error
 
 
