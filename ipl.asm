@@ -27,40 +27,53 @@
 
 ; note
 entry:
-		MOV		AX,0			        ; 初始化寄存器
+		MOV		AX,0				; 初始化寄存器
 		MOV		SS,AX
 		MOV		SP,0x7c00
 		MOV		DS,AX
-		MOV		ES,AX
 
-		MOV		SI,msg
+;
+		MOV		AX,0x0820
+		MOV		ES,AX
+		MOV		CH,0				;
+		MOV		DH,0				;
+		MOV		CL,2
+
+		MOV		AH,0x02				;
+		MOV		AL,1				;
+		MOV		BX,0
+		MOV		DL,0x00				;
+		INT		0x13				;
+		JC		error
+
+
+fin:
+		HLT						; CPU休眠的指令
+		JMP		fin				;
+error:
+		MOV		SI,msg				; 错误信息
 
 
 putloop:
 		MOV		AL,[SI]
-		ADD		SI,1			  	;
+		ADD		SI,1				;
 		CMP		AL,0
 		JE		fin
 		MOV		AH,0x0e				;
-		MOV		BX,15			  	;
-		INT		0x10			  	;
+		MOV		BX,15				;
+		INT		0x10				;
 		JMP		putloop
 
-fin:
-		HLT					      	; CPU休眠的指令
-		JMP		fin			    	; 无限循环, 所以字符串才能显示在屏幕上		
-		
 
 ; 信息显示部分
 msg:
 		DB		0x0a, 0x0a
-		DB		"hello, world"
+		DB		"load error"
 ; 换行
 		DB		0x0a, 0x0a		
-		DB		"markOS is running!"
+		DB		"markOS"
 		DB		0
-
-		RESB	0x7dfe-$				; 利用0x00填充到0x1fe为止		
+		RESB	        0x7dfe-$			; 利用0x00填充到0x1fe为止		
 		
 		DB		0x55, 0xaa
 
