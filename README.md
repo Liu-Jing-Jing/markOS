@@ -1,4 +1,6 @@
 # markOS
+## Current Version beta 0.1.7(day4)
+## ReleaseNote
 - Version: beta 0.0.8 将磁盘的启动扇区和C0-H0-S2读入内存中
 - Version: beta 0.0.9 将磁盘的启动扇区和C0-H0-S2到S17.算上boot sector共18个扇区读入内存中
 - Version: beta 0.1.0 将磁盘的启动扇区和C0-H0-S2到第10个柱面的C9-H1-S17读入内存中,共10个柱面.内存占用180KB
