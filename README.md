@@ -1,5 +1,5 @@
 # markOS
-- Version: beta 0.1.1
+- Version: beta 0.0.7
 - [学习笔记更新](https://github.com/Liu-Jing-Jing/markOS/wiki)
 
 ```
