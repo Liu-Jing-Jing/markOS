@@ -1,5 +1,5 @@
 # markOS
-## Current Version beta 0.1.7(day4)
+## Current Version beta 0.1.7
 - [学习笔记更新](https://github.com/Liu-Jing-Jing/markOS/wiki)
 
 ## ReleaseNote
