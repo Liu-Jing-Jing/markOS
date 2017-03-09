@@ -1,6 +1,6 @@
 ; hello-os
 ; TAB=4
-    		
+    	CYLS	EQU		10    	                    	; 类似于C语言的宏定义，定义常量10.代表10个柱面
 		ORG		0x7c00
 ; 软驱的信息
 		JMP		entry
@@ -39,12 +39,38 @@ entry:
 		MOV		DH,0				; 软盘的磁头0,正面的磁头		
 		MOV		CL,2				; 软盘的第二个扇区,C0-H0-S2		
 		
-		MOV		AH,0x02				; AH = 0x02代表的意思是读盘		
-		MOV		AL,1				; 只处理1个扇区		
+		readloop:
+		MOV		SI,0            		; 记录尝试的次数
+retry:
+		MOV		AH,0x02				; AH = 0x02代表的意思是读盘			
+		MOV		AL,1				; 只处理1个扇区			
 		MOV		BX,0
-		MOV		DL,0x00				; 代表A驱动器号		
-		INT		0x13				; 调用BIOS的第19号与磁盘有关的函数	
-		JC		error
+		MOV		DL,0x00				; 代表A驱动器号			
+		INT		0x13				; 调用BIOS的第19号与磁盘有关的函数			
+		JNC		next
+		ADD		SI,1
+		CMP		SI,5
+		JAE		error
+		MOV		AH,0x00
+		MOV		DL,0x00
+		INT		0x13
+		JMP		retry
+		
+next:
+		MOV		AX,ES			
+		ADD		AX,0x0020
+		MOV		ES,AX			
+		ADD		CL,1			
+		CMP		CL,18			
+		JBE		readloop
+		MOV		CL,1
+		ADD		DH,1
+		CMP		DH,2
+		JB		readloop			; DH < 2代表正反面
+		MOV		DH,0   				; 开始读取下一个柱面
+		ADD		CH,1
+		CMP		CH,CYLS
+		JB		readloop			; CH < CYLS
 
 
 fin:
