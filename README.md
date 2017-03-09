@@ -8,6 +8,8 @@
 - Version: beta 0.1.0 将磁盘的启动扇区和C0-H0-S2到第10个柱面的C9-H1-S17读入内存中,共10个柱面.内存占用180KB
 
 
+1. test
+2. test
 ```
 [代码块](https://github.com/Liu-Jing-Jing/markOS/blob/master/helloOS.asm)
 entry:
