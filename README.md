@@ -1,5 +1,5 @@
 # markOS
-## Current Version beta 0.2.5
+## Current Version beta 0.3.2
 - [学习笔记更新](https://github.com/Liu-Jing-Jing/markOS/wiki)
 
 ## ReleaseNote
@@ -11,7 +11,7 @@
 2 test
 
 1. test
-2.test
+2. test
 ```
 [代码块](https://github.com/Liu-Jing-Jing/markOS/blob/master/helloOS.asm)
 entry:
