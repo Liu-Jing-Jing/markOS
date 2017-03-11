@@ -11,7 +11,7 @@ void HariMain(void)
 	for (i = 0xa0000; i <= 0xaffff; i++)
 	{
 		ptr = i;
-		*ptr = 7;
+		*ptr = i&0x0f;
 	}
 fin:
 	io_hlt();	/** 汇编实现的函数*/
