@@ -7,7 +7,7 @@ void HariMain(void)
 	char *ptr;  	/** 变量ptr用来存放BYTE的地址*/
 
 	// 显卡显存的起始地址 0xa0000	
-	
+	// 显存大小64 KB
 	for (i = 0xa0000; i <= 0xaffff; i++)
 	{
 		ptr = i;
