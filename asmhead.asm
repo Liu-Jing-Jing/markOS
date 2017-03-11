@@ -1,26 +1,26 @@
 ; mark-os boot asm 前半部分汇编 后半部分C写的
 ; TAB=4
 
-BOTPAK	EQU		0x00280000		; bootpackのロード先
-DSKCAC	EQU		0x00100000		; 磁盘缓存的位置
-DSKCAC0	EQU		0x00008000		; 磁盘缓存的位置(Real模式下)
+BOTPAK	EQU		0x00280000			; bootpackのロード先
+DSKCAC	EQU		0x00100000			; 磁盘缓存的位置
+DSKCAC0	EQU		0x00008000			; 磁盘缓存的位置(Real模式下)
 
 ; BOOT_INFO相关信息
-CYLS	EQU		0x0ff0			; boot sector的设定
+CYLS	EQU		0x0ff0				; boot sector的设定
 LEDS	EQU		0x0ff1
-VMODE	EQU		0x0ff2			; 色数に関する情報。何ビットカラーか？
-SCRNX	EQU		0x0ff4			; 解像度のX
-SCRNY	EQU		0x0ff6			; 解像度のY
-VRAM	EQU		0x0ff8			; 图像缓冲区的开始地址
+VMODE	EQU		0x0ff2
+SCRNX	EQU		0x0ff4			
+SCRNY	EQU		0x0ff6			
+VRAM	EQU		0x0ff8			
 
 		ORG		0xc200			; 程序被装载到内存的这个位置
 
 ; 画面モードを設定
 
-		MOV		AL,0x13			; VGAグラフィックス、320x200x8bitカラー
+		MOV		AL,0x13			
 		MOV		AH,0x00
 		INT		0x10
-		MOV		BYTE [VMODE],8	; 画面モードをメモする（C言語が参照する）
+		MOV		BYTE [VMODE],8
 		MOV		WORD [SCRNX],320
 		MOV		WORD [SCRNY],200
 		MOV		DWORD [VRAM],0x000a0000
@@ -40,10 +40,10 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的开始地址
 
 		MOV		AL,0xff
 		OUT		0x21,AL
-		NOP						; OUT命令を連続させるとうまくいかない機種があるらしいので
+		NOP					; OUT命令を連続させるとうまくいかない機種があるらしいので
 		OUT		0xa1,AL
 
-		CLI						; さらにCPUレベルでも割り込み禁止
+		CLI					; さらにCPUレベルでも割り込み禁止
 
 ; CPUから1MB以上のメモリにアクセスできるように、A20GATEを設定
 
@@ -57,12 +57,12 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的开始地址
 
 ; プロテクトモード移行
 
-[INSTRSET "i486p"]				; 486の命令まで使いたいという記述
+[INSTRSET "i486p"]					; 486の命令まで使いたいという記述
 
-		LGDT	[GDTR0]			; 暫定GDTを設定
+		LGDT	[GDTR0]				; 暫定GDTを設定
 		MOV		EAX,CR0
-		AND		EAX,0x7fffffff	; bit31を0にする（ページング禁止のため）
-		OR		EAX,0x00000001	; bit0を1にする（プロテクトモード移行のため）
+		AND		EAX,0x7fffffff		; bit31を0にする（ページング禁止のため）
+		OR		EAX,0x00000001		; bit0を1にする（プロテクトモード移行のため）
 		MOV		CR0,EAX
 		JMP		pipelineflush
 pipelineflush:
@@ -75,7 +75,7 @@ pipelineflush:
 
 ; bootpackの転送
 
-		MOV		ESI,bootpack	; 転送元
+		MOV		ESI,bootpack		; 転送元
 		MOV		EDI,BOTPAK		; 転送先
 		MOV		ECX,512*1024/4
 		CALL	memcpy
@@ -91,11 +91,11 @@ pipelineflush:
 
 ; 残り全部
 
-		MOV		ESI,DSKCAC0+512	; 転送元
-		MOV		EDI,DSKCAC+512	; 転送先
+		MOV		ESI,DSKCAC0+512		; 転送元
+		MOV		EDI,DSKCAC+512		; 転送先
 		MOV		ECX,0
 		MOV		CL,BYTE [CYLS]
-		IMUL	ECX,512*18*2/4	; シリンダ数からバイト数/4に変換
+		IMUL	ECX,512*18*2/4	
 		SUB		ECX,512/4		; IPLの分だけ差し引く
 		CALL	memcpy
 
@@ -109,12 +109,12 @@ pipelineflush:
 		ADD		ECX,3			; ECX += 3;
 		SHR		ECX,2			; ECX /= 4;
 		JZ		skip			; 転送するべきものがない
-		MOV		ESI,[EBX+20]	; 転送元
+		MOV		ESI,[EBX+20]		; 転送元
 		ADD		ESI,EBX
-		MOV		EDI,[EBX+12]	; 転送先
+		MOV		EDI,[EBX+12]		; 転送先
 		CALL	memcpy
 skip:
-		MOV		ESP,[EBX+12]	; スタック初期値
+		MOV		ESP,[EBX+12]		; スタック初期値
 		JMP		DWORD 2*8:0x0000001b
 
 waitkbdout:
