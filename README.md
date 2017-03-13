@@ -7,9 +7,8 @@
 - Version: beta 0.0.9 将磁盘的启动扇区和C0-H0-S2到S17.算上boot sector共18个扇区读入内存中
 - Version: beta 0.1.0 将磁盘的启动扇区和C0-H0-S2到第10个柱面的C9-H1-S17读入内存中,共10个柱面.内存占用180KB
 
-#当前进度:
-#day 05 last GDT and IDT initialize
-
+#当前进度: day 05 last GDT and IDT initialize
+```
 BootStrap
 vim 的转义使用反斜杠 将"/"替换为"\"  :1,$/\//\\/g
 http://blog.csdn.net/thimin/article/details/2313390
@@ -38,6 +37,8 @@ Asmhead.nas 隐藏的细节 VGA 显示模式 实模式保护模式
 0x00300000  -   0x003FFFFF 栈及其他
 0x003c0000  ~   32KB       memman
 0x00400000      EMPTY
+```
+
 ```
 [代码块](https://github.com/Liu-Jing-Jing/markOS/blob/master/helloOS.asm)
 entry:
