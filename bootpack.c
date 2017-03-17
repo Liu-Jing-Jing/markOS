@@ -14,8 +14,8 @@ void HariMain(void)
 		*ptr = i&0x0f;
 	}
 	
-	for
-fin:
-	io_hlt();	/** 汇编实现的函数*/
-	goto fin;
+	for(; ;)
+	{
+		io_hlt();	/** 汇编实现的函数*/
+	}
 }
