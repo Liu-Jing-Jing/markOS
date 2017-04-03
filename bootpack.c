@@ -1,3 +1,7 @@
+/**
+ 0:黑色 1:亮红色 2:亮绿色 3:亮黄色 4:亮蓝色 5:亮紫色 6:浅蓝色 7:白色 8:亮灰色
+ 9:暗红色 10:暗绿色 11:暗黄色 12:暗青色 13:暗紫色 14:浅暗蓝 15:暗灰色
+ */
 #define COL8_000000		0
 #define COL8_FF0000		1
 #define COL8_00FF00		2
@@ -14,10 +18,8 @@
 #define COL8_840084		13
 #define COL8_008484		14
 #define COL8_848484		15
-/** 
- 0:黑色 1:亮红色 2:亮绿色 3:亮黄色 4:亮蓝色 5:亮紫色 6:浅蓝色 7:白色 8:亮灰色
- 9:暗红色 10:暗绿色 11:暗黄色 12:暗青色 13:暗紫色 14:浅暗蓝 15:暗灰色
- */
+
+
 #define kScreenXSize    320
 #define kScreenYSize    200
 /* ----------绘图功能区---------- */
@@ -84,7 +86,7 @@ void io_store_eflags(int eflags);
 void init_palette(void);
 void set_palette(int start, int end, unsigned char *rgb);
 void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect);
-void initHomeScreen(char *vram, int x, int y)
+void initHomeScreen(char *vram, int x, int y);
 
 struct BOOTINFO
 {
@@ -98,16 +100,11 @@ void HariMain(void)
     char *vram;
 	int xsize, ysize;
 	struct BOOTINFO *binfo;
-
+    binfo = (struct BOOTINFO *) 0x0ff0; // 特殊用法, 指向首地址
     
     init_palette(); /* 初始化调色板*/
-    binfo = (struct BOOTINFO *) 0x0ff0; // 特殊用法, 指向首地址
-	xsize = (*binfo).scrnx;
-	ysize = (*binfo).scrny;
-	vram = (*binfo).vram;
+    initHomeScreen(binfo->vram, binfo->scrnx, binfo->scrny);
     
-    initHomeScreen(vram, xsize, ysize);
-
 	for ( ; ; )
 	{
 		io_hlt();	/** 汇编实现的函数,代码在naskfunc.nas里面*/
@@ -120,6 +117,7 @@ void initHomeScreen(char *vram, int x, int y)
     // int maxScreenY = kScreenYSize -1;
     
     int statusBarH = 21;
+    unsigned char * p =  (unsigned char*)vram;
     // 画两个矩形
     drawRectWith8BitColor(p, COL8_C6C6C6, CGRectMake(0, 0, maxScreenX, statusBarH));
     drawRectWith8BitColor(p, COL8_008484, CGRectMake(0, statusBarH+1, maxScreenX, maxScreenX-statusBarH));
