@@ -102,15 +102,24 @@ void HariMain(void)
 	// int xsize, ysize;
 	struct BOOTINFO *binfo;
     binfo = (struct BOOTINFO *) 0x0ff0; // 特殊用法, 指向首地址
-    static char font_A[16] =
-    {
-		0x00, 0x18, 0x18, 0x18, 0x18, 0x24, 0x24, 0x24,
-		0x24, 0x7e, 0x42, 0x42, 0x42, 0xe7, 0x00, 0x00
-	};
-    
+//    static char font_A[16] =
+//    {
+//		0x00, 0x18, 0x18, 0x18, 0x18, 0x24, 0x24, 0x24,
+//		0x24, 0x7e, 0x42, 0x42, 0x42, 0xe7, 0x00, 0x00
+//	};
+    extern char hankaku[4096];
+
     init_palette(); /* 初始化调色板*/
     initHomeScreen(binfo->vram, binfo->scrnx, binfo->scrny);
-    putfont8(binfo->vram, binfo->scrnx, 4, 4, COL8_FFFFFF, font_A);
+
+    // 显示 字符ABC 123
+    putfont8(binfo->vram, binfo->scrnx,  8, 24, COL8_FFFFFF, hankaku + 'A' * 16);
+	putfont8(binfo->vram, binfo->scrnx, 16, 24, COL8_FFFFFF, hankaku + 'B' * 16);
+	putfont8(binfo->vram, binfo->scrnx, 24, 24, COL8_FFFFFF, hankaku + 'C' * 16);
+	putfont8(binfo->vram, binfo->scrnx, 40, 24, COL8_FFFFFF, hankaku + '1' * 16);
+	putfont8(binfo->vram, binfo->scrnx, 48, 24, COL8_FFFFFF, hankaku + '2' * 16);
+	putfont8(binfo->vram, binfo->scrnx, 56, 24, COL8_FFFFFF, hankaku + '3' * 16);
+    
 	for ( ; ; )
 	{
 		io_hlt();	/** 汇编实现的函数,代码在naskfunc.nas里面*/
