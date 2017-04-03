@@ -1,3 +1,72 @@
+#define COL8_000000		0
+#define COL8_FF0000		1
+#define COL8_00FF00		2
+#define COL8_FFFF00		3
+#define COL8_0000FF		4
+#define COL8_FF00FF		5
+#define COL8_00FFFF		6
+#define COL8_FFFFFF		7
+#define COL8_C6C6C6		8
+#define COL8_840000		9
+#define COL8_008400		10
+#define COL8_848400		11
+#define COL8_000084		12
+#define COL8_840084		13
+#define COL8_008484		14
+#define COL8_848484		15
+
+#define kScreenXSize    320
+/* ----------绘图功能区---------- */
+#define CGFLOAT_TYPE float
+
+typedef CGFLOAT_TYPE CGFloat;
+/* Point*/
+struct CGPoint {
+    CGFloat x;
+    CGFloat y;
+};
+typedef struct CGPoint CGPoint;
+/* Sizes*/
+
+struct CGSize {
+    CGFloat width;
+    CGFloat height;
+};
+typedef struct CGSize CGSize;
+
+/* Rectangle */
+struct CGRect {
+    CGPoint origin;
+    CGSize size;
+};
+typedef struct CGRect CGRect;
+
+
+
+CGPoint CGPointMake(CGFloat x, CGFloat y);
+CGSize CGSizeMake(CGFloat width, CGFloat height);
+CGRect CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
+
+CGPoint CGPointMake(CGFloat x, CGFloat y)
+{
+    CGPoint p; p.x = x; p.y = y; return p;
+}
+
+CGSize CGSizeMake(CGFloat width, CGFloat height)
+{
+    CGSize size; size.width = width; size.height = height; return size;
+}
+
+CGRect CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+{
+    CGRect rect = {CGPointMake(x, y), CGSizeMake(width, height)};
+    return rect;
+}
+
+const CGPoint CGPointZero = {0, 0};
+const CGSize CGSizeZero = {0, 0};
+const CGRect CGRectZero = {0, 0, 0, 0};
+/* ----------绘图功能区---------- */
 
 
 /** 函数的声明.告诉gcc编译器，函数在别的文件里*/
@@ -10,31 +79,45 @@ void io_store_eflags(int eflags);
 /** 函数声明.代码写在源文件的也需要声明*/
 void init_palette(void);
 void set_palette(int start, int end, unsigned char *rgb);
+void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect);
 
 void HariMain(void)
 {
-	int i;		/** i是32位的整数*/
-    char *p = 0xa0000;  /** 变量ptr用来存放BYTE的地址*/
+    char *p = (char *)0xa0000;  /** 变量ptr用来存放BYTE的地址*/
     
-    init_palette() /** 初始化调色板*/
- 
-	// 显卡显存的起始地址 0xa0000	
-	// 显存大小64 KB
-	for (i = 0x0000; i <= 0xffff; i++)
-	{
-        p[i] = i&0x0f;
-	}
-
+    init_palette(); /* 初始化调色板*/
+    
+    drawRectWith8BitColor(p, COL8_FF0000, CGRectMake(20, 20, 100, 100));
+    drawRectWith8BitColor(p, COL8_00FF00, CGRectMake(120, 70, 100, 100));
+    drawRectWith8BitColor(p, COL8_00FF00, CGRectMake(220, 120, 100, 100));
 	for ( ; ; )
 	{
 		io_hlt();	/** 汇编实现的函数,代码在naskfunc.nas里面*/
 	}
 }
-	
+
+void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect)
+{
+	int x, y;
+    int x0 = rect.origin.x;
+    int y0 = rect.origin.y;
+    int x1 = x0+rect.size.width;
+    int y1 = y0+rect.size.height;
+    
+	for(y= y0; y<=y1; y++)
+	{
+		for(x=x0; x<=x1; x++)
+		{
+			// 坐标转换为vRAM地址, 将颜色color填充到显存的这个地址
+			vRAM[y*kScreenXSize + x] = color;
+		}
+	}
+	return;
+}
 void init_palette(void)
 {
 	static unsigned char table_rgb[16 * 3] = {
-		0x00, 0x00, 0x00,	/*  0:黑色*/
+		0x00, 0x00, 0x00,	/*  0:黑色*/
 		0xff, 0x00, 0x00,	/*  1:亮红色*/
 		0x00, 0xff, 0x00,	/*  2:亮绿色*/
 		0xff, 0xff, 0x00,	/*  3:亮黄色*/
@@ -51,9 +134,10 @@ void init_palette(void)
 		0x00, 0x84, 0x84,	/* 14:浅暗蓝*/
 		0x84, 0x84, 0x84	/* 15:暗灰色*/
 	};
+    
 	set_palette(0, 15, table_rgb);
 	return;
-
+    
 	/** 在C语言中static char只能用于数据。相当于汇编语言中的DB指令定义一比特数据*/
 }
 
@@ -62,15 +146,15 @@ void set_palette(int start, int end, unsigned char *rgb)
 {
 	int i, eflags;
 	eflags = io_load_eflags();			// 记录中断许可标志eflags的值
-	io_cli(); 					
+	io_cli(); 							// 将中断许可标志的值设为1 禁止中断
 	io_out8(0x03c8, start);
-	for (i = start; i <= end; i++) 
+	for (i = start; i <= end; i++)
 	{
 		io_out8(0x03c9, rgb[0] / 4);
 		io_out8(0x03c9, rgb[1] / 4);
 		io_out8(0x03c9, rgb[2] / 4);
 		rgb += 3;
 	}
-	io_store_eflags(eflags);	
+	io_store_eflags(eflags);			// 复原中断许可的进位标志
 	return;
 }
