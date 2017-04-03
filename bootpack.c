@@ -84,44 +84,60 @@ void io_store_eflags(int eflags);
 void init_palette(void);
 void set_palette(int start, int end, unsigned char *rgb);
 void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect);
+void initHomeScreen(char *vram, int x, int y)
+
 
 void HariMain(void)
 {
-    char *p = (char *)0xa0000;  /** 变量ptr用来存放BYTE的地址*/
+    char *vram;
+	int xsize, ysize;
+	short *binfo_scrnx, *binfo_scrny;
+	int *binfo_vram;
     
     init_palette(); /* 初始化调色板*/
+	binfo_scrnx = (short *) 0x0ff4;
+	binfo_scrny = (short *) 0x0ff6;
+	binfo_vram = (int *) 0x0ff8;
+	xsize = *binfo_scrnx;
+	ysize = *binfo_scrny;
+	vram = (char *) *binfo_vram;
     
-    int maxScreenX = kScreenXSize -1;
-    // int maxScreenY = kScreenYSize -1;
+    initHomeScreen(vram, xsize, ysize);
 
-    int statusBarH = 21;
-    // 画两个矩形
-    drawRectWith8BitColor(p, COL8_C6C6C6, CGRectMake(0, 0, maxScreenX, statusBarH));
-    drawRectWith8BitColor(p, COL8_008484, CGRectMake(0, statusBarH+1, maxScreenX, maxScreenX-statusBarH));
-
-    // 画线
-    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(0, statusBarH+1, maxScreenX, 0));
-
-    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 19, 59, 0));
-    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 2, 0, 17));
-
-    drawRectWith8BitColor(p, COL8_848484, CGRectMake(2, 2, 59, 0));
-    drawRectWith8BitColor(p, COL8_848484, CGRectMake(61, 2, 0, 17));
-/*
-	boxfill8(COL8_000000,  2,         ysize -  3, 59,         ysize -  3);
-	boxfill8(COL8_000000, 60,         ysize - 24, 60,         ysize -  3);
-
-	boxfill8(COL8_848484, xsize - 47, ysize - 24, xsize -  4, ysize - 24);
-	boxfill8(COL8_848484, xsize - 47, ysize - 23, xsize - 47, ysize -  4);
-	boxfill8(COL8_FFFFFF, xsize - 47, ysize -  3, xsize -  4, ysize -  3);
-	boxfill8(COL8_FFFFFF, xsize -  3, ysize - 24, xsize -  3, ysize -  3);
-*/
 	for ( ; ; )
 	{
 		io_hlt();	/** 汇编实现的函数,代码在naskfunc.nas里面*/
 	}
 }
 
+void initHomeScreen(char *vram, int x, int y)
+{
+    int maxScreenX = kScreenXSize -1;
+    // int maxScreenY = kScreenYSize -1;
+    
+    int statusBarH = 21;
+    // 画两个矩形
+    drawRectWith8BitColor(p, COL8_C6C6C6, CGRectMake(0, 0, maxScreenX, statusBarH));
+    drawRectWith8BitColor(p, COL8_008484, CGRectMake(0, statusBarH+1, maxScreenX, maxScreenX-statusBarH));
+    
+    // 画线
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(0, statusBarH+1, maxScreenX, 0));
+    
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 19, 59, 0));
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 2, 0, 17));
+    
+    drawRectWith8BitColor(p, COL8_848484, CGRectMake(2, 2, 59, 0));
+    drawRectWith8BitColor(p, COL8_848484, CGRectMake(61, 2, 0, 17));
+    /*
+     boxfill8(COL8_000000,  2,         ysize -  3, 59,         ysize -  3);
+     boxfill8(COL8_000000, 60,         ysize - 24, 60,         ysize -  3);
+     
+     boxfill8(COL8_848484, xsize - 47, ysize - 24, xsize -  4, ysize - 24);
+     boxfill8(COL8_848484, xsize - 47, ysize - 23, xsize - 47, ysize -  4);
+     boxfill8(COL8_FFFFFF, xsize - 47, ysize -  3, xsize -  4, ysize -  3);
+     boxfill8(COL8_FFFFFF, xsize -  3, ysize - 24, xsize -  3, ysize -  3);
+     */
+}
 void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect)
 {
 	int x, y;
