@@ -87,7 +87,8 @@ void init_palette(void);
 void set_palette(int start, int end, unsigned char *rgb);
 void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect);
 void initHomeScreen(char *vram, int x, int y);
-void putfont8(char *vram, int xsize, int x, int y, char c, char *font);
+void putfont8(char *vram, int xsize, int x, int y, char color, char *font);
+void drawASCII8String(char *vram, int xsize, CGPoint point, char color, unsigned char *s);
 
 struct BOOTINFO
 {
@@ -96,31 +97,43 @@ struct BOOTINFO
 	char *vram;
 };
 
+// #pragma mark - Main
 void HariMain(void)
 {
     // char *vram;
 	// int xsize, ysize;
 	struct BOOTINFO *binfo;
     binfo = (struct BOOTINFO *) 0x0ff0; // 特殊用法, 指向首地址
-//    static char font_A[16] =
-//    {
-//		0x00, 0x18, 0x18, 0x18, 0x18, 0x24, 0x24, 0x24,
-//		0x24, 0x7e, 0x42, 0x42, 0x42, 0xe7, 0x00, 0x00
-//	};
     extern char hankaku[4096];
-
+    
+    //    static char font_A[16] =
+    //    {
+    //		0x00, 0x18, 0x18, 0x18, 0x18, 0x24, 0x24, 0x24,
+    //		0x24, 0x7e, 0x42, 0x42, 0x42, 0xe7, 0x00, 0x00
+    //	};
+    
     init_palette(); /* 初始化调色板*/
     initHomeScreen(binfo->vram, binfo->scrnx, binfo->scrny);
+    // 开始标志
+    drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(7, 4), COL8_000000, (unsigned char *)"Mark I");
+    drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(6, 3), COL8_FF0000, (unsigned char *)"Mark I");
 
     // 显示 字符ABC 123
-    putfont8(binfo->vram, binfo->scrnx,  8, 24, COL8_FFFFFF, hankaku + 'A' * 16);
-	putfont8(binfo->vram, binfo->scrnx, 16, 24, COL8_FFFFFF, hankaku + 'B' * 16);
-	putfont8(binfo->vram, binfo->scrnx, 24, 24, COL8_FFFFFF, hankaku + 'C' * 16);
-	putfont8(binfo->vram, binfo->scrnx, 40, 24, COL8_FFFFFF, hankaku + '1' * 16);
-	putfont8(binfo->vram, binfo->scrnx, 48, 24, COL8_FFFFFF, hankaku + '2' * 16);
-	putfont8(binfo->vram, binfo->scrnx, 56, 24, COL8_FFFFFF, hankaku + '3' * 16);
+    drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(10, 30), COL8_FFFF00, (unsigned char *)"ABC 123");
     
-	for ( ; ; )
+    
+    drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(11, 51), COL8_000000, (unsigned char *)"markOS is running !");
+    drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(10, 50), COL8_FFFFFF, (unsigned char *)"markOS is running !");
+    // 尾部添加笑脸图标
+    putfont8(binfo->vram, binfo->scrnx, 167, 51, COL8_FFFFFF, hankaku+0x01*16);
+
+    // 显示变量的值
+    char s[40];
+    sprintf(s, "var scrnx = %d", binfo->scrnx);
+	drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(10, 67), COL8_FFFFFF, (unsigned char *)s);
+    
+    
+    for ( ; ; )
 	{
 		io_hlt();	/** 汇编实现的函数,代码在naskfunc.nas里面*/
 	}
@@ -147,6 +160,25 @@ void putfont8(char *vram, int xsize, int x, int y, char c, char *font)
     
 }
 
+
+void drawASCII8String(char *vram, int xsize, CGPoint point, char color, unsigned char *s)
+{
+	extern char hankaku[4096];
+    
+    int x = point.x;
+    int y = point.y;
+    
+    // 字符串的结束标志是\0
+	for (; *s != 0x00; s++)
+    {
+        // 转换到对应的地址上 *16
+		putfont8(vram, xsize, x, y, color, hankaku + *s * 16);
+		x += 8;
+	}
+	return;
+    
+}
+
 void initHomeScreen(char *vram, int x, int y)
 {
     int maxScreenX = kScreenXSize -1;
@@ -161,11 +193,11 @@ void initHomeScreen(char *vram, int x, int y)
     // 画线
     drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(0, statusBarH+1, maxScreenX, 0));
     
-    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 19, 59, 0));
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 19, 55, 0));
     drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 2, 0, 17));
     
-    drawRectWith8BitColor(p, COL8_848484, CGRectMake(2, 2, 59, 0));
-    drawRectWith8BitColor(p, COL8_848484, CGRectMake(61, 2, 0, 17));
+    drawRectWith8BitColor(p, COL8_848484, CGRectMake(2, 2, 55, 0));
+    drawRectWith8BitColor(p, COL8_848484, CGRectMake(57, 2, 0, 17));
     /*
      boxfill8(COL8_000000,  2,         ysize -  3, 59,         ysize -  3);
      boxfill8(COL8_000000, 60,         ysize - 24, 60,         ysize -  3);
