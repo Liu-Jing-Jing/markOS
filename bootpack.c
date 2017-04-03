@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 /**
  0:黑色 1:亮红色 2:亮绿色 3:亮黄色 4:亮蓝色 5:亮紫色 6:浅蓝色 7:白色 8:亮灰色
  9:暗红色 10:暗绿色 11:暗黄色 12:暗青色 13:暗紫色 14:浅暗蓝 15:暗灰色
@@ -89,7 +91,8 @@ void drawRectWith8BitColor(unsigned char *vRAM, unsigned char color, CGRect rect
 void initHomeScreen(char *vram, int x, int y);
 void putfont8(char *vram, int xsize, int x, int y, char color, char *font);
 void drawASCII8String(char *vram, int xsize, CGPoint point, char color, unsigned char *s);
-
+void init_mouse_cursor8(char *mouse, char bc);
+void putblock8_8(char *vram, int vxsize, int pxsize, int pysize, int px0, int py0, char *buf, int bxsize);
 struct BOOTINFO
 {
 	char cyls, leds, vmode, reserve;
@@ -132,6 +135,16 @@ void HariMain(void)
     sprintf(s, "var scrnx = %d", binfo->scrnx);
 	drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(10, 67), COL8_FFFFFF, (unsigned char *)s);
     
+    //屏幕的中心点坐标
+    int mx = (binfo->scrnx - 16) / 2;
+	int my = (binfo->scrny - 22 - 16) / 2;
+    char mcursor[256];
+	init_mouse_cursor8(mcursor, COL8_008484);
+	putblock8_8(binfo->vram, binfo->scrnx, 16, 16, mx, my, mcursor, 16);
+	char mousePosition[20];
+    sprintf(mousePosition, "(%d, %d)", mx, my);
+    drawASCII8String(binfo->vram, binfo->scrnx, CGPointMake(240, 3), COL8_FFFFFF, mousePosition);
+
     
     for ( ; ; )
 	{
@@ -269,5 +282,59 @@ void set_palette(int start, int end, unsigned char *rgb)
 	}
 	io_store_eflags(eflags);			// 复原中断许可的进位标志
 	return;
+}
 
+/** 鼠标指针代码*/
+void init_mouse_cursor8(char *mouse, char bc)
+{
+	static char cursor[16][16] = {
+		"**************..",
+		"*OOOOOOOOOOO*...",
+		"*OOOOOOOOOO*....",
+		"*OOOOOOOOO*.....",
+		"*OOOOOOOO*......",
+		"*OOOOOOO*.......",
+		"*OOOOOOO*.......",
+		"*OOOOOOOO*......",
+		"*OOOO**OOO*.....",
+		"*OOO*..*OOO*....",
+		"*OO*....*OOO*...",
+		"*O*......*OOO*..",
+		"**........*OOO*.",
+		"*..........*OOO*",
+		"............*OO*",
+		".............***"
+	};
+	int x, y;
+    
+	for (y = 0; y < 16; y++)
+    {
+		for (x = 0; x < 16; x++)
+        {
+			if (cursor[y][x] == '*')
+            {
+				mouse[y * 16 + x] = COL8_000000;
+			}
+			if (cursor[y][x] == 'O')
+            {
+				mouse[y * 16 + x] = COL8_FFFFFF;
+			}
+			if (cursor[y][x] == '.')
+            {
+				mouse[y * 16 + x] = bc;
+			}
+		}
+	}
+	return;
+}
+
+void putblock8_8(char *vram, int vxsize, int pxsize, int pysize, int px0, int py0, char *buf, int bxsize)
+{
+	int x, y;
+	for (y = 0; y < pysize; y++) {
+		for (x = 0; x < pxsize; x++) {
+			vram[(py0 + y) * vxsize + (px0 + x)] = buf[y * bxsize + x];
+		}
+	}
+	return;
 }
