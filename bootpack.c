@@ -14,8 +14,12 @@
 #define COL8_840084		13
 #define COL8_008484		14
 #define COL8_848484		15
-
+/** 
+ 0:黑色 1:亮红色 2:亮绿色 3:亮黄色 4:亮蓝色 5:亮紫色 6:浅蓝色 7:白色 8:亮灰色
+ 9:暗红色 10:暗绿色 11:暗黄色 12:暗青色 13:暗紫色 14:浅暗蓝 15:暗灰色
+ */
 #define kScreenXSize    320
+#define kScreenYSize    200
 /* ----------绘图功能区---------- */
 #define CGFLOAT_TYPE float
 
@@ -65,7 +69,7 @@ CGRect CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
 
 const CGPoint CGPointZero = {0, 0};
 const CGSize CGSizeZero = {0, 0};
-const CGRect CGRectZero = {0, 0, 0, 0};
+const CGRect CGRectZero = {{0, 0}, {0, 0}};
 /* ----------绘图功能区---------- */
 
 
@@ -87,9 +91,31 @@ void HariMain(void)
     
     init_palette(); /* 初始化调色板*/
     
-    drawRectWith8BitColor(p, COL8_FF0000, CGRectMake(20, 20, 100, 100));
-    drawRectWith8BitColor(p, COL8_00FF00, CGRectMake(120, 70, 100, 100));
-    drawRectWith8BitColor(p, COL8_00FF00, CGRectMake(220, 120, 100, 100));
+    int maxScreenX = kScreenXSize -1;
+    // int maxScreenY = kScreenYSize -1;
+
+    int statusBarH = 21;
+    // 画两个矩形
+    drawRectWith8BitColor(p, COL8_C6C6C6, CGRectMake(0, 0, maxScreenX, statusBarH));
+    drawRectWith8BitColor(p, COL8_008484, CGRectMake(0, statusBarH+1, maxScreenX, maxScreenX-statusBarH));
+
+    // 画线
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(0, statusBarH+1, maxScreenX, 0));
+
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 19, 59, 0));
+    drawRectWith8BitColor(p, COL8_FFFFFF, CGRectMake(2, 2, 0, 17));
+
+    drawRectWith8BitColor(p, COL8_848484, CGRectMake(2, 2, 59, 0));
+    drawRectWith8BitColor(p, COL8_848484, CGRectMake(61, 2, 0, 17));
+/*
+	boxfill8(COL8_000000,  2,         ysize -  3, 59,         ysize -  3);
+	boxfill8(COL8_000000, 60,         ysize - 24, 60,         ysize -  3);
+
+	boxfill8(COL8_848484, xsize - 47, ysize - 24, xsize -  4, ysize - 24);
+	boxfill8(COL8_848484, xsize - 47, ysize - 23, xsize - 47, ysize -  4);
+	boxfill8(COL8_FFFFFF, xsize - 47, ysize -  3, xsize -  4, ysize -  3);
+	boxfill8(COL8_FFFFFF, xsize -  3, ysize - 24, xsize -  3, ysize -  3);
+*/
 	for ( ; ; )
 	{
 		io_hlt();	/** 汇编实现的函数,代码在naskfunc.nas里面*/
