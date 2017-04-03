@@ -269,4 +269,5 @@ void set_palette(int start, int end, unsigned char *rgb)
 	}
 	io_store_eflags(eflags);			// 复原中断许可的进位标志
 	return;
+
 }
